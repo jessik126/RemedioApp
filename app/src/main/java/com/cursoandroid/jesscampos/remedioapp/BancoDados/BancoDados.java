@@ -2,6 +2,7 @@ package com.cursoandroid.jesscampos.remedioapp.BancoDados;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -37,4 +38,18 @@ public class BancoDados {
             return "Registro Inserido com sucesso";
 
     }
+
+    public Cursor carregaDados(){
+        Cursor cursor;
+        String[] campos =  {banco.KEY_CAIXA,banco.KEY_NOME};
+        db = banco.getReadableDatabase();
+        cursor = db.query(banco.TABLE_REMEDIOS, campos, null, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+
 }

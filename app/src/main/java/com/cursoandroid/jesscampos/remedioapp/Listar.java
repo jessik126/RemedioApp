@@ -1,13 +1,18 @@
 package com.cursoandroid.jesscampos.remedioapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 
 import java.util.ArrayList;
 
@@ -16,39 +21,24 @@ import java.util.ArrayList;
  */
 public class Listar extends AppCompatActivity {
     Utils utils = new Utils(Listar.this);
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar);
 
-        final ListView listaRemedios = (ListView) findViewById(R.id.lvRemedios);
+        //banco
+        BancoDados crud = new BancoDados(getBaseContext());
+        Cursor cursor = crud.carregaDados();
 
-        //exibir
-        final ArrayList<String> remedios = preencherDados();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, remedios);
-        listaRemedios.setAdapter(arrayAdapter);
+        String[] nomeCampos = new String[] {CriaBancoDados.KEY_CAIXA, CriaBancoDados.KEY_NOME};
+        int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
 
-        //ao clicar no item
-        listaRemedios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                utils.alert("Remédio: " +remedios.get(position).toString());
-                //Toast.makeText(getApplicationContext(), "Remédio: " +remedios.get(position).toString(), Toast.LENGTH_LONG).show();
-
-                //abrr tela Historico
-                Intent abreTela = new Intent(Listar.this, Historico.class);
-                Listar.this.startActivity(abreTela);
-            }
-        });
-
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
+                R.layout.lista_itens,cursor,nomeCampos,idViews, 0);
+        lista = (ListView)findViewById(R.id.lvRemedios);
+        lista.setAdapter(adaptador);
     }
 
-    private ArrayList<String> preencherDados() {
-        ArrayList<String> dados = new ArrayList<String>();
-        dados.add("A");
-        dados.add("B");
-        dados.add("C");
-        return dados;
-    }
 }

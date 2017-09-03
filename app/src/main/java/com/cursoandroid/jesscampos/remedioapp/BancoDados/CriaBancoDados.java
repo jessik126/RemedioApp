@@ -77,29 +77,3 @@ public class CriaBancoDados extends SQLiteOpenHelper {
 }
 
 
-    // ------------------------ table methods ----------------//
-/*
-    public String addRemedio(Remedio rm) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        long resultado;
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NOME, rm.nome);
-        values.put(KEY_CAIXA, rm.caixa);
-        values.put(KEY_HORA, rm.hora);
-        values.put(KEY_MIN, rm.min);
-        values.put(KEY_MEDICO, rm.medico);
-
-        // insert row
-        resultado = db.insert(TABLE_REMEDIOS, null, values);
-        db.close();
-
-        if (resultado ==-1)
-            return "Erro ao inserir registro";
-        else
-            return "Registro Inserido com sucesso";
-
-    }
-
-*/
-
