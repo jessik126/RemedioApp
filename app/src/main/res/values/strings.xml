@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">RemedioApp</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="login">Login</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="nome">Nome</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="inserir">Inserir Medicamentos</string>
+    <string name="listar">Listar Medicamentos</string>
+    <string name="parear">Sincronizar caixinha</string>
+    <string name="lista">Lista de Medicamentos em Uso</string>
+    <string name="historico">Historico</string>
+    <string name="editar">Editar</string>
+    <string name="menu">Menu</string>
+    <string name="onoff">ON/OFF</string>
+    <string name="caixa">Caixa</string>
+    <string name="hora">Hora</string>
+    <string name="min">Minuto</string>
+    <string name="medico">Médico</string>
+
+</resources>
