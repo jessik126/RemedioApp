@@ -1,14 +1,15 @@
 package com.cursoandroid.jesscampos.remedioapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
@@ -19,8 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Jessica on 22/07/2017.
  */
-public class Listar extends AppCompatActivity {
-    Utils utils = new Utils(Listar.this);
+public class Listar extends Activity {
     private ListView lista;
 
     @Override
@@ -35,8 +35,7 @@ public class Listar extends AppCompatActivity {
         String[] nomeCampos = new String[] {CriaBancoDados.KEY_CAIXA, CriaBancoDados.KEY_NOME};
         int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
 
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
-                R.layout.lista_itens,cursor,nomeCampos,idViews, 0);
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(this, R.layout.lista_itens,cursor,nomeCampos,idViews, 0);
         lista = (ListView)findViewById(R.id.lvRemedios);
         lista.setAdapter(adaptador);
     }

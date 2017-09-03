@@ -28,7 +28,7 @@ public class CriaBancoDados extends SQLiteOpenHelper {
     public static final String TABLE_REMEDIOS = "remedios";
 
     // NOTES Table - column names
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "_id";
     public static final String KEY_NOME = "nome";
     public static final String KEY_CAIXA = "caixa";
     public static final String KEY_HORA = "hora";
@@ -44,7 +44,7 @@ public class CriaBancoDados extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_REMEDIO = "CREATE TABLE "
             + TABLE_REMEDIOS
             + "("
-            + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_NOME + " TEXT,"
             + KEY_CAIXA + " TEXT,"
             + KEY_HORA + " INT,"

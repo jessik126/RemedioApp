@@ -41,7 +41,7 @@ public class BancoDados {
 
     public Cursor carregaDados(){
         Cursor cursor;
-        String[] campos =  {banco.KEY_CAIXA,banco.KEY_NOME};
+        String[] campos =  {banco.KEY_ID, banco.KEY_CAIXA,banco.KEY_NOME};
         db = banco.getReadableDatabase();
         cursor = db.query(banco.TABLE_REMEDIOS, campos, null, null, null, null, null, null);
 
