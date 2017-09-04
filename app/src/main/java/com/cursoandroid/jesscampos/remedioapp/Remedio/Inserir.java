@@ -1,4 +1,4 @@
-package com.cursoandroid.jesscampos.remedioapp;
+package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
+import com.cursoandroid.jesscampos.remedioapp.R;
 
 /**
  * Created by Jessica on 22/07/2017.

@@ -6,14 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.cursoandroid.jesscampos.remedioapp.Remedio.Inserir;
+import com.cursoandroid.jesscampos.remedioapp.Remedio.Listar;
+
 /**
  * Created by Jessica on 22/07/2017.
  */
-public class TelaMenu extends AppCompatActivity {
+public class MenuPrincipal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tela_menu);
+        setContentView(R.layout.menu_principal);
 
         Button btInserir = (Button) findViewById(R.id.btInserir);
         Button btListar = (Button) findViewById(R.id.btListar);
@@ -24,8 +27,8 @@ public class TelaMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //abrir tela inserir
-                Intent abreTela = new Intent(TelaMenu.this, Inserir.class);
-                TelaMenu.this.startActivity(abreTela);
+                Intent abreTela = new Intent(MenuPrincipal.this, Inserir.class);
+                MenuPrincipal.this.startActivity(abreTela);
             }
         });
 
@@ -34,8 +37,8 @@ public class TelaMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //abrir tela listar
-                Intent abreTela = new Intent(TelaMenu.this, Listar.class);
-                TelaMenu.this.startActivity(abreTela);
+                Intent abreTela = new Intent(MenuPrincipal.this, Listar.class);
+                MenuPrincipal.this.startActivity(abreTela);
             }
         });
 
@@ -44,8 +47,8 @@ public class TelaMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //abrir tela parear
-                Intent abreTela = new Intent(TelaMenu.this, Parear.class);
-                TelaMenu.this.startActivity(abreTela);
+                Intent abreTela = new Intent(MenuPrincipal.this, Parear.class);
+                MenuPrincipal.this.startActivity(abreTela);
             }
         });
     }

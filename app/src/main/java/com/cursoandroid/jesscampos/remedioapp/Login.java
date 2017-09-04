@@ -7,18 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class TelaLogin extends AppCompatActivity {
-    Utils utils = new Utils(TelaLogin.this);
+public class Login extends AppCompatActivity {
+    Utils utils = new Utils(Login.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tela_login);
+        setContentView(R.layout.login);
 
         Button btLogin = (Button) findViewById(R.id.btLogin);
         Button btTelaCadastrar = (Button) findViewById(R.id.btTelaCadastrar);
 
-        //evento tela_login
+        //evento login
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,10 +32,10 @@ public class TelaLogin extends AppCompatActivity {
                 }
                 else if (email.equals("jessik126@gmail.com") && senha.equals("126"))
                 {
-                    utils.alert("TelaLogin realizado com sucesso");
-                    //abrir tela TelaCadastrar
-                    Intent abreTelaMenu = new Intent(TelaLogin.this, TelaMenu.class);
-                    TelaLogin.this.startActivity(abreTelaMenu);
+                    utils.alert("Login realizado com sucesso");
+                    //abrir tela Cadastrar
+                    Intent abreTelaMenu = new Intent(Login.this, MenuPrincipal.class);
+                    Login.this.startActivity(abreTelaMenu);
                 }
                 else
                 {
@@ -44,14 +44,14 @@ public class TelaLogin extends AppCompatActivity {
             }
         });
 
-        //evento tela_cadastrar
+        //evento cadastrar
         btTelaCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //abrir tela TelaCadastrar
-                Intent abreTela = new Intent(TelaLogin.this, TelaCadastrar.class);
-                TelaLogin.this.startActivity(abreTela);
+                //abrir tela Cadastrar
+                Intent abreTela = new Intent(Login.this, Cadastrar.class);
+                Login.this.startActivity(abreTela);
             }
         });
 

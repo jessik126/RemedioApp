@@ -1,4 +1,4 @@
-package com.cursoandroid.jesscampos.remedioapp;
+package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.cursoandroid.jesscampos.remedioapp.R;
 
 import java.util.Arrays;
 

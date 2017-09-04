@@ -28,7 +28,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/inserir"
+        android:text="@string/inserirMedicamento"
         android:id="@+id/btInserir"
         android:textColor="#FFFFFF"
         android:background="#4052b5"

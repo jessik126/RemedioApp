@@ -52,4 +52,37 @@ public class BancoDados {
         return cursor;
     }
 
+    public Cursor carregaDadoById(int id){
+        Cursor cursor;
+        String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_MIN, banco.KEY_MEDICO};
+        String where = CriaBancoDados.KEY_ID + "=" + id;
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBancoDados.TABLE_REMEDIOS,campos,where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+
+    public void alteraRegistro(int id, Remedio remedio){
+        ContentValues valores;
+        String where;
+
+        db = banco.getWritableDatabase();
+
+        where = CriaBancoDados.KEY_ID + "=" + id;
+
+        valores = new ContentValues();
+        valores.put(CriaBancoDados.KEY_NOME, remedio.nome);
+        valores.put(CriaBancoDados.KEY_CAIXA, remedio.caixa);
+        valores.put(CriaBancoDados.KEY_HORA, remedio.hora);
+        valores.put(CriaBancoDados.KEY_MIN, remedio.min);
+        valores.put(CriaBancoDados.KEY_MEDICO, remedio.medico);
+
+        db.update(CriaBancoDados.TABLE_REMEDIOS,valores,where,null);
+        db.close();
+    }
+
 }

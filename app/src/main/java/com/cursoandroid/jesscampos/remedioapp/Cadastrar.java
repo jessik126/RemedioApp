@@ -6,17 +6,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class TelaCadastrar extends AppCompatActivity {
+public class Cadastrar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tela_cadastrar);
+        setContentView(R.layout.cadastrar);
 
         Button btCadastrar = (Button) findViewById(R.id.btCadastrar);
         Button btCancelar = (Button) findViewById(R.id.btCancelar);
 
-        //evento tela_cadastrar
+        //evento cadastrar
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,7 +34,7 @@ public class TelaCadastrar extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //fechar essa tela e voltar pra tela de tela_login
+                //fechar essa tela e voltar pra tela de login
                 finish();
             }
         });

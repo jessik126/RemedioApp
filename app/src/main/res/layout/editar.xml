@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/inserir"
-        android:id="@+id/tvInserir"
+        android:text="@string/editar"
+        android:id="@+id/tvEditar"
         android:layout_gravity="center_horizontal" />
 
     <TextView
@@ -28,7 +28,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etNome" />
+        android:id="@+id/etNomeEditar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etNomeCaixa" />
+        android:id="@+id/etNomeCaixaEditar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etHora"
+        android:id="@+id/etHoraEditar"
         android:inputType="number" />
 
     <TextView
@@ -62,7 +62,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etMin"
+        android:id="@+id/etMinEditar"
         android:inputType="number" />
 
     <TextView
@@ -74,14 +74,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etMedico" />
+        android:id="@+id/etMedicoEditar" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="@string/inserir"
-        android:id="@+id/btInserir"
+        android:text="@string/editar"
+        android:id="@+id/btEditarRemedio"
         android:layout_gravity="center_horizontal"
         android:background="#c04052b5"
         android:textColor="#FFFFFF" />
