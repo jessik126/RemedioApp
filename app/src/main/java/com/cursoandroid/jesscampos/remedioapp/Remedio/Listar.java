@@ -43,10 +43,11 @@ public class Listar extends Activity {
                 String codigo;
                 cursor.moveToPosition(position);
                 codigo = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_ID));
-                Intent intent = new Intent(Listar.this, MenuRemedio.class);
-                intent.putExtra("codigo", codigo);
-                startActivity(intent);
-                finish();
+                Intent abreTela = new Intent(Listar.this, MenuRemedio.class);
+                abreTela.putExtra("codigo", codigo);
+
+                Listar.this.startActivity(abreTela);
+
             }
         });
 
