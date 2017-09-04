@@ -31,7 +31,7 @@ public class Editar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inserir);
+        setContentView(R.layout.editar);
 
         codigo = this.getIntent().getStringExtra("codigo");
         Button btEditarRemedio = (Button)findViewById(R.id.btEditarRemedio);

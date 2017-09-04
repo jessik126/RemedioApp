@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Editar;
-import com.cursoandroid.jesscampos.remedioapp.Remedio.Inserir;
-import com.cursoandroid.jesscampos.remedioapp.Remedio.Listar;
 
 /**
  * Created by Jessica on 03/09/2017.
  */
-public class MenuRemedio  extends AppCompatActivity {
+public class MenuRemedio extends AppCompatActivity {
     String codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_principal);
+        setContentView(R.layout.menu_remedio);
 
         Button btEditarRemedio = (Button) findViewById(R.id.btEditarRemedio);
         Button btDesativarRemedio = (Button) findViewById(R.id.btDesativarRemedio);

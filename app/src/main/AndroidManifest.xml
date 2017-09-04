@@ -25,10 +25,12 @@
 
         <activity android:name=".Cadastrar"/>
         <activity android:name=".MenuPrincipal"/>
+        <activity android:name=".MenuRemedio"/>
         <activity android:name=".Remedio.Inserir"/>
         <activity android:name=".Remedio.Listar"/>
-        <activity android:name=".Parear"/>
+        <activity android:name=".Remedio.Editar"/>
         <activity android:name=".Remedio.Historico"/>
+        <activity android:name=".Parear"/>
     </application>
 
 </manifest>

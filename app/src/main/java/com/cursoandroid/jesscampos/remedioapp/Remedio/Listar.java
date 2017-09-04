@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
+import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
@@ -43,12 +44,10 @@ public class Listar extends Activity {
                 String codigo;
                 cursor.moveToPosition(position);
                 codigo = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_ID));
-
                 Intent abreTela = new Intent(Listar.this, MenuRemedio.class);
-                //abreTela.putExtra("codigo", codigo);
+                abreTela.putExtra("codigo", codigo);
 
                 Listar.this.startActivity(abreTela);
-
             }
         });
 
