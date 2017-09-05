@@ -19,7 +19,7 @@ public class CriaBancoDados extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "remedioApp";
@@ -32,7 +32,6 @@ public class CriaBancoDados extends SQLiteOpenHelper {
     public static final String KEY_NOME = "nome";
     public static final String KEY_CAIXA = "caixa";
     public static final String KEY_HORA = "hora";
-    public static final String KEY_MIN = "min";
     public static final String KEY_FREQDIA = "freq_dia";
     public static final String KEY_FREQHORA = "freq_hora";
     public static final String KEY_FUNCAO = "funcao";
@@ -47,11 +46,10 @@ public class CriaBancoDados extends SQLiteOpenHelper {
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_NOME + " TEXT,"
             + KEY_CAIXA + " TEXT,"
-            + KEY_HORA + " INT,"
-            + KEY_MIN + " INT,"
-            /*+ KEY_FREQDIA + " TEXT"
-            + KEY_FREQHORA + " INTEGER"
-            + KEY_FUNCAO + " TEXT"*/
+            + KEY_HORA + " TEXT,"
+            + KEY_FREQHORA + " INT,"
+            + KEY_FREQDIA + " TEXT,"
+            + KEY_FUNCAO + " TEXT,"
             + KEY_MEDICO + " TEXT"
             + ")";
 

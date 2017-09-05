@@ -36,10 +36,29 @@
         android:text="@string/caixa"
         android:id="@+id/tvCaixa" />
 
-    <EditText
-        android:layout_width="match_parent"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rbuttonGroupEditar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etNomeCaixaEditar" />
+        android:orientation="horizontal"
+        android:layout_marginLeft="50dp">
+        <RadioButton android:id="@+id/rbuttonAEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"/>
+        <RadioButton android:id="@+id/rbuttonBEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B"/>
+        <RadioButton android:id="@+id/rbuttonCEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"/>
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,13 +75,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/min"
-        android:id="@+id/tvMin" />
+        android:text="Repete a cada X hora"
+        android:id="@+id/tvFreqHora" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etMinEditar"
+        android:id="@+id/etFreqHoraEditar"
         android:inputType="number" />
 
     <TextView

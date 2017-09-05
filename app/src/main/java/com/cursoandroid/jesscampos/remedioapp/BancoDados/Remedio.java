@@ -9,8 +9,7 @@ public class Remedio {
     int id;
     String nome;
     String caixa;
-    int hora;
-    int min;
+    String hora;
     String freqDia;
     int freqHora;
     String funcao;
@@ -20,23 +19,21 @@ public class Remedio {
     public Remedio() {
     }
 
-    public Remedio(String nome, String caixa, int hora, int min,String freqDia, int freqHora, String funcao, String medico) {
+    public Remedio(String nome, String caixa, String hora, String freqDia, int freqHora, String funcao, String medico) {
         this.nome = nome;
         this.caixa = caixa;
         this.hora = hora;
-        this.min = min;
         this.freqDia = freqDia;
         this.freqHora = freqHora;
         this.funcao = funcao;
         this.medico = medico;
     }
 
-    public Remedio(int id, String nome, String caixa, Date data, String freqDia, int freqHora, String funcao, String medico) {
+    public Remedio(int id, String nome, String caixa, String hora, String freqDia, int freqHora, String funcao, String medico) {
         this.id = id;
         this.nome = nome;
         this.caixa = caixa;
         this.hora = hora;
-        this.min = min;
         this.freqDia = freqDia;
         this.freqHora = freqHora;
         this.funcao = funcao;
@@ -54,12 +51,8 @@ public class Remedio {
 
     public void setCaixa(String caixa) { this.caixa = caixa;  }
 
-    public void setHora(int hora) {
+    public void setHora(String hora) {
         this.hora = hora;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
     }
 
     public void setFreqDia(String freqDia) {
@@ -86,9 +79,7 @@ public class Remedio {
 
     public String getCaixa() { return this.caixa; }
 
-    public int getHora() { return this.hora; }
-
-    public int getMin() { return this.min; }
+    public String getHora() { return this.hora; }
 
     public String getFreqDia() { return this.freqDia; }
 

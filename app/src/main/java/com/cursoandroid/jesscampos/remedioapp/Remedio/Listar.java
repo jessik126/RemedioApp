@@ -34,7 +34,7 @@ public class Listar extends Activity {
         String[] nomeCampos = new String[] {CriaBancoDados.KEY_CAIXA, CriaBancoDados.KEY_NOME};
         int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
 
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(this, R.layout.lista_itens,cursor,nomeCampos,idViews, 0);
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Listar.this, R.layout.lista_itens, cursor, nomeCampos, idViews, 0);
         lista = (ListView)findViewById(R.id.lvRemedios);
         lista.setAdapter(adaptador);
 

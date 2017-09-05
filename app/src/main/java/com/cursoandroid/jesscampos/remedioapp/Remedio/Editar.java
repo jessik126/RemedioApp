@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
@@ -22,50 +25,65 @@ public class Editar extends AppCompatActivity {
     String codigo;
     BancoDados crud;
     EditText nome;
-    EditText caixa;
     EditText hora;
-    EditText min;
+    EditText freqHora;
     EditText medico;
     Cursor cursor;
+    RadioGroup rbGrupoCaixa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar);
 
-        codigo = this.getIntent().getStringExtra("codigo");
-        Button btEditarRemedio = (Button)findViewById(R.id.btEditarRemedio);
+
+        nome = (EditText)findViewById(R.id.etNomeEditar);
+        hora = (EditText)findViewById((R.id.etHoraEditar));
+        freqHora = (EditText)findViewById(R.id.etFreqHoraEditar);
+        medico = (EditText)findViewById(R.id.etMedicoEditar);
+        rbGrupoCaixa = (RadioGroup) findViewById(R.id.rbuttonGroupEditar);
 
         crud = new BancoDados(getBaseContext());
-
-        nome = (EditText)findViewById(R.id.etNome);
-        caixa = (EditText)findViewById(R.id.etNomeCaixa);
-        hora = (EditText)findViewById((R.id.etHora));
-        min = (EditText)findViewById(R.id.etMin);
-        medico = (EditText)findViewById(R.id.etMedico);
-
-
+        codigo = this.getIntent().getStringExtra("codigo");
         cursor = crud.carregaDadoById(Integer.parseInt(codigo));
+
+        String caixaBanco = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_CAIXA));
+        switch(caixaBanco) {
+            case "A":
+                rbGrupoCaixa.check(R.id.rbuttonAEditar);
+                break;
+            case "B":
+                rbGrupoCaixa.check(R.id.rbuttonBEditar);
+                break;
+            case "C":
+                rbGrupoCaixa.check(R.id.rbuttonCEditar);
+                break;
+        }
+
         nome.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
-        caixa.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_CAIXA)));
         hora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)));
-        min.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_MIN)));
+        freqHora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)));
         medico.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_MEDICO)));
 
+
+        Button btEditarRemedio = (Button)findViewById(R.id.btEditarRemedio);
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Remedio remedio = new Remedio();
+                String caixa = ((RadioButton) findViewById(rbGrupoCaixa.getCheckedRadioButtonId())).getText().toString();
 
+                Remedio remedio = new Remedio();
                 remedio.setNome(nome.getText().toString());
-                remedio.setCaixa(caixa.getText().toString());
-                remedio.setHora(Integer.parseInt(hora.getText().toString()));
-                remedio.setMin(Integer.parseInt(min.getText().toString()));
+                remedio.setCaixa(caixa);
+                remedio.setHora(hora.getText().toString());
+                remedio.setFreqHora(Integer.parseInt(freqHora.getText().toString()));
                 remedio.setMedico(medico.getText().toString());
+                remedio.setFreqDia("");
+                remedio.setFuncao("");
 
                 crud.alteraRegistro(Integer.parseInt(codigo), remedio);
-                Intent intent = new Intent(Editar.this, MenuRemedio.class);
+                Intent intent = new Intent(Editar.this, Listar.class);
                 startActivity(intent);
                 finish();
             }

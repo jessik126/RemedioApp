@@ -63,6 +63,24 @@
         android:ems="10"
         android:id="@+id/etSenha" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de nascimento"
+        android:id="@+id/tvNascimento" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/edDateNascimento"
+
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+
+
     <Button
         android:layout_width="240dp"
         android:layout_height="wrap_content"

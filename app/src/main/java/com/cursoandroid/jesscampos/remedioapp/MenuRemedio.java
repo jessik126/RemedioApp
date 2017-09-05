@@ -1,12 +1,17 @@
 package com.cursoandroid.jesscampos.remedioapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Editar;
+import com.cursoandroid.jesscampos.remedioapp.Remedio.Listar;
 
 /**
  * Created by Jessica on 03/09/2017.
@@ -25,6 +30,10 @@ public class MenuRemedio extends AppCompatActivity {
         Button btHistoricoRemedio = (Button) findViewById(R.id.btHistoricoRemedio);
 
         codigo = this.getIntent().getStringExtra("codigo");
+        BancoDados crud = new BancoDados(getBaseContext());
+        Cursor cursor = crud.carregaDadoById(Integer.parseInt(codigo));
+        TextView nomeTela = (TextView)findViewById(R.id.tvMenuRemedio);
+        nomeTela.setText(nomeTela.getText() + " " + cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
 
         //evento editar
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
@@ -41,8 +50,11 @@ public class MenuRemedio extends AppCompatActivity {
         btDesativarRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela listar
-                Intent abreTela = new Intent(MenuRemedio.this, Editar.class);
+                BancoDados crud = new BancoDados(getBaseContext());
+                crud.desativaRegistro(Integer.parseInt(codigo));
+
+                //abrir tela inserir
+                Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });
@@ -51,8 +63,11 @@ public class MenuRemedio extends AppCompatActivity {
         btDeletarRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela parear
-                Intent abreTela = new Intent(MenuRemedio.this, Editar.class);
+                BancoDados crud = new BancoDados(getBaseContext());
+                crud.deletaRegistro(Integer.parseInt(codigo));
+
+                //abrir tela inserir
+                Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });

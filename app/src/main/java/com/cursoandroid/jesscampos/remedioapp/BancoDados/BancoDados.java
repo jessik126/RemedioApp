@@ -17,19 +17,21 @@ public class BancoDados {
         banco = new CriaBancoDados(context);
     }
 
-    public String addRemedio(Remedio rm) {
+    public String addRemedio(Remedio remedio) {
         db = banco.getWritableDatabase();
         long resultado;
 
-        ContentValues values = new ContentValues();
-        values.put(CriaBancoDados.KEY_NOME, rm.nome);
-        values.put(CriaBancoDados.KEY_CAIXA, rm.caixa);
-        values.put(CriaBancoDados.KEY_HORA, rm.hora);
-        values.put(CriaBancoDados.KEY_MIN, rm.min);
-        values.put(CriaBancoDados.KEY_MEDICO, rm.medico);
+        ContentValues valores = new ContentValues();
+        valores.put(CriaBancoDados.KEY_NOME, remedio.nome);
+        valores.put(CriaBancoDados.KEY_CAIXA, remedio.caixa);
+        valores.put(CriaBancoDados.KEY_HORA, remedio.hora);
+        valores.put(CriaBancoDados.KEY_FREQHORA, remedio.freqHora);
+        valores.put(CriaBancoDados.KEY_MEDICO, remedio.medico);
+        valores.put(CriaBancoDados.KEY_FREQDIA, remedio.freqDia);
+        valores.put(CriaBancoDados.KEY_FUNCAO, remedio.funcao);
 
         // insert row
-        resultado = db.insert(CriaBancoDados.TABLE_REMEDIOS, null, values);
+        resultado = db.insert(CriaBancoDados.TABLE_REMEDIOS, null, valores);
         db.close();
 
         if (resultado ==-1)
@@ -54,7 +56,7 @@ public class BancoDados {
 
     public Cursor carregaDadoById(int id){
         Cursor cursor;
-        String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_MIN, banco.KEY_MEDICO};
+        String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO};
         String where = CriaBancoDados.KEY_ID + "=" + id;
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBancoDados.TABLE_REMEDIOS,campos,where, null, null, null, null, null);
@@ -67,22 +69,37 @@ public class BancoDados {
     }
 
     public void alteraRegistro(int id, Remedio remedio){
-        ContentValues valores;
-        String where;
-
-        db = banco.getWritableDatabase();
-
-        where = CriaBancoDados.KEY_ID + "=" + id;
-
-        valores = new ContentValues();
+        ContentValues valores = new ContentValues();
         valores.put(CriaBancoDados.KEY_NOME, remedio.nome);
         valores.put(CriaBancoDados.KEY_CAIXA, remedio.caixa);
         valores.put(CriaBancoDados.KEY_HORA, remedio.hora);
-        valores.put(CriaBancoDados.KEY_MIN, remedio.min);
+        valores.put(CriaBancoDados.KEY_FREQHORA, remedio.freqHora);
         valores.put(CriaBancoDados.KEY_MEDICO, remedio.medico);
+        valores.put(CriaBancoDados.KEY_FREQDIA, remedio.freqDia);
+        valores.put(CriaBancoDados.KEY_FUNCAO, remedio.funcao);
 
+        String where = CriaBancoDados.KEY_ID + "=" + id;
+        db = banco.getWritableDatabase();
         db.update(CriaBancoDados.TABLE_REMEDIOS,valores,where,null);
         db.close();
     }
+
+    public void deletaRegistro(int id){
+        String where = CriaBancoDados.KEY_ID + "=" + id;
+        db = banco.getReadableDatabase();
+        db.delete(CriaBancoDados.TABLE_REMEDIOS,where,null);
+        db.close();
+    }
+
+    public void desativaRegistro(int id){
+        ContentValues valores = new ContentValues();
+        valores.put(CriaBancoDados.KEY_CAIXA, "");
+        
+        String where = CriaBancoDados.KEY_ID + "=" + id;
+        db = banco.getWritableDatabase();
+        db.update(CriaBancoDados.TABLE_REMEDIOS,valores,where,null);
+        db.close();
+    }
+
 
 }
