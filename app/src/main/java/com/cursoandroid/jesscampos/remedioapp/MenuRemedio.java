@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Editar;
+import com.cursoandroid.jesscampos.remedioapp.Remedio.Historico;
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Listar;
 
 /**
@@ -77,7 +78,7 @@ public class MenuRemedio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //abrir tela parear
-                Intent abreTela = new Intent(MenuRemedio.this, Parear.class);
+                Intent abreTela = new Intent(MenuRemedio.this, Historico.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });

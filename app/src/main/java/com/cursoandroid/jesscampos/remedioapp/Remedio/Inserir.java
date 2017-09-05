@@ -1,6 +1,7 @@
 package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
+import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
 /**
@@ -57,6 +59,10 @@ public class Inserir extends AppCompatActivity {
                 BancoDados crud = new BancoDados(getBaseContext());
                 String resultado = crud.addRemedio(remedio);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
+                startActivity(intent);
+                finish();
             }
         });
 

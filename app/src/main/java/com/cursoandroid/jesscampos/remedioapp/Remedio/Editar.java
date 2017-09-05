@@ -1,15 +1,20 @@
 package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
@@ -18,6 +23,8 @@ import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
+import java.util.Calendar;
+
 /**
  * Created by Jessica on 03/09/2017.
  */
@@ -25,11 +32,13 @@ public class Editar extends AppCompatActivity {
     String codigo;
     BancoDados crud;
     EditText nome;
-    EditText hora;
     EditText freqHora;
     EditText medico;
     Cursor cursor;
     RadioGroup rbGrupoCaixa;
+
+    private EditText hora;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,5 +97,32 @@ public class Editar extends AppCompatActivity {
                 finish();
             }
         });
+
+        hora = (EditText)findViewById((R.id.etHoraEditar));
+        hora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int hour = cal.get(Calendar.HOUR_OF_DAY);
+                int minute = cal.get(Calendar.MINUTE);
+
+                TimePickerDialog dialog = new TimePickerDialog(
+                        Editar.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mTimeSetListener,
+                        hour,minute, DateFormat.is24HourFormat(Editar.this));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker datePicker, int hourOfDay, int minute) {
+
+                String date = hourOfDay + ":" + minute;
+                hora.setText(date);
+            }
+        };
     }
 }
