@@ -17,6 +17,8 @@ public class BancoDados {
         banco = new CriaBancoDados(context);
     }
 
+    //TABLE_REMEDIOS
+
     public String addRemedio(Remedio remedio) {
         db = banco.getWritableDatabase();
         long resultado;
@@ -99,6 +101,53 @@ public class BancoDados {
         db = banco.getWritableDatabase();
         db.update(CriaBancoDados.TABLE_REMEDIOS,valores,where,null);
         db.close();
+    }
+
+    //TABLE_REMEDIOS_HISTORICO
+    public String insereHistorico(RemedioHistorico historico){
+        db = banco.getWritableDatabase();
+        long resultado;
+
+        ContentValues valores = new ContentValues();
+        valores.put(CriaBancoDados.KEY_ID_REMEDIO, historico.idRemedio);
+        valores.put(CriaBancoDados.KEY_DIA_HISTORICO, historico.dia);
+        valores.put(CriaBancoDados.KEY_HORA_HISTORICO, historico.hora);
+
+        // insert row
+        resultado = db.insert(CriaBancoDados.TABLE_REMEDIOS_HISTORICO, null, valores);
+        db.close();
+
+        if (resultado ==-1)
+            return "Erro ao inserir registro";
+        else
+            return "Registro Inserido com sucesso";
+    }
+
+    public Cursor carregaDadosHistorico(){
+        Cursor cursor;
+        String[] campos = {banco.KEY_ID_HISTORICO, banco.KEY_ID_REMEDIO, banco.KEY_DIA_HISTORICO, banco.KEY_HORA_HISTORICO};
+        db = banco.getReadableDatabase();
+        cursor = db.query(banco.TABLE_REMEDIOS_HISTORICO, campos, null, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+
+    public Cursor carregaDadosHistoricosByRemedio(int idRemedio){
+        Cursor cursor;
+        String[] campos = {banco.KEY_ID_HISTORICO, banco.KEY_ID_REMEDIO, banco.KEY_DIA_HISTORICO, banco.KEY_HORA_HISTORICO};
+        String where = CriaBancoDados.KEY_ID_REMEDIO + "=" + idRemedio;
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBancoDados.TABLE_REMEDIOS_HISTORICO,campos,where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
     }
 
 
