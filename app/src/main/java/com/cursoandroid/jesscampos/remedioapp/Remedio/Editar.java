@@ -22,6 +22,8 @@ import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
+import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
+import com.nex3z.togglebuttongroup.button.CircularToggle;
 
 import java.util.Calendar;
 
@@ -36,6 +38,7 @@ public class Editar extends AppCompatActivity {
     EditText medico;
     Cursor cursor;
     RadioGroup rbGrupoCaixa;
+    MultiSelectToggleGroup gpDiasDaSemana;
 
     private EditText hora;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
@@ -51,6 +54,7 @@ public class Editar extends AppCompatActivity {
         freqHora = (EditText)findViewById(R.id.etFreqHoraEditar);
         medico = (EditText)findViewById(R.id.etMedicoEditar);
         rbGrupoCaixa = (RadioGroup) findViewById(R.id.rbuttonGroupEditar);
+        gpDiasDaSemana = (MultiSelectToggleGroup) findViewById(R.id.gpDiasDaSemana);
 
         crud = new BancoDados(getBaseContext());
         codigo = this.getIntent().getStringExtra("codigo");
@@ -73,7 +77,7 @@ public class Editar extends AppCompatActivity {
         hora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)));
         freqHora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)));
         medico.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_MEDICO)));
-
+//        preencheDiasDaSemana(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQDIA)));
 
         Button btEditarRemedio = (Button)findViewById(R.id.btEditarRemedio);
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
@@ -82,13 +86,19 @@ public class Editar extends AppCompatActivity {
 
                 String caixa = ((RadioButton) findViewById(rbGrupoCaixa.getCheckedRadioButtonId())).getText().toString();
 
+                String diasSelecionados = "";
+                for(int index=0; index<((MultiSelectToggleGroup)gpDiasDaSemana).getChildCount(); ++index) {
+                    CircularToggle child = (CircularToggle) ((MultiSelectToggleGroup)gpDiasDaSemana).getChildAt(index);
+                    diasSelecionados += child.isChecked() ? '1' : '0';
+                }
+
                 Remedio remedio = new Remedio();
                 remedio.setNome(nome.getText().toString());
                 remedio.setCaixa(caixa);
                 remedio.setHora(hora.getText().toString());
                 remedio.setFreqHora(Integer.parseInt(freqHora.getText().toString()));
                 remedio.setMedico(medico.getText().toString());
-                remedio.setFreqDia("");
+                remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
 
                 crud.alteraRegistro(Integer.parseInt(codigo), remedio);
@@ -124,5 +134,22 @@ public class Editar extends AppCompatActivity {
                 hora.setText(date);
             }
         };
+    }
+
+    private void preencheDiasDaSemana(String diasSelecionados) {
+        if(diasSelecionados.isEmpty() || (diasSelecionados.length() != ((MultiSelectToggleGroup)gpDiasDaSemana).getChildCount()))
+            return;
+
+        gpDiasDaSemana = (MultiSelectToggleGroup) findViewById(R.id.gpDiasDaSemana);
+
+        for(int index=0; index < diasSelecionados.length(); ++index) {
+            CircularToggle child = (CircularToggle) ((MultiSelectToggleGroup)gpDiasDaSemana).getChildAt(index);
+            if(diasSelecionados.charAt(index) == '1')
+                child.setChecked(true);
+            else
+                child.setChecked(false);
+
+        }
+
     }
 }

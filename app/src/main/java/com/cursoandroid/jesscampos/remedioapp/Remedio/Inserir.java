@@ -20,6 +20,8 @@ import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
 import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.R;
+import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
+import com.nex3z.togglebuttongroup.button.CircularToggle;
 
 /**
  * Created by Jessica on 22/07/2017.
@@ -28,6 +30,7 @@ public class Inserir extends AppCompatActivity {
     private EditText hora;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String caixa;
+    MultiSelectToggleGroup gpDiasDaSemana;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,13 @@ public class Inserir extends AppCompatActivity {
 
                 EditText freqHora = (EditText)findViewById(R.id.etFreqHora);
                 EditText medico = (EditText)findViewById(R.id.etMedico);
+                gpDiasDaSemana = (MultiSelectToggleGroup) findViewById(R.id.gpDiasDaSemana);
+
+                String diasSelecionados = "";
+                for(int index = 0; index<((MultiSelectToggleGroup)gpDiasDaSemana).getChildCount(); ++index) {
+                    CircularToggle child = (CircularToggle) ((MultiSelectToggleGroup)gpDiasDaSemana).getChildAt(index);
+                    diasSelecionados += child.isChecked() ? '1' : '0';
+                }
 
                 Remedio remedio = new Remedio();
                 remedio.setNome(nome.getText().toString());
@@ -53,7 +63,7 @@ public class Inserir extends AppCompatActivity {
                 remedio.setHora(hora.getText().toString());
                 remedio.setFreqHora(Integer.parseInt(freqHora.getText().toString()));
                 remedio.setMedico(medico.getText().toString());
-                remedio.setFreqDia("");
+                remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
 
                 BancoDados crud = new BancoDados(getBaseContext());
