@@ -1,16 +1,24 @@
 package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
+import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
+import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
 import java.util.Arrays;
@@ -19,48 +27,47 @@ import java.util.Arrays;
  * Created by Jessica on 23/07/2017.
  */
 public class Historico extends AppCompatActivity {
-
-    private XYPlot plot;
+    ListView lista;
+    Cursor cursor;
+    Cursor cursorRemedio;
+    String codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.historico);
 
-        Button btEditar = (Button) findViewById(R.id.btEditar);
+        //banco
+        BancoDados crud = new BancoDados(getBaseContext());
+        codigo = this.getIntent().getStringExtra("codigo");
+        cursorRemedio = crud.carregaDadoById(Integer.parseInt(codigo));
+        cursor = crud.carregaDadosHistoricosByRemedio(Integer.parseInt(codigo));
+        //cursor = crud.carregaDadosHistorico();
 
-        //evento editar
-        btEditar.setOnClickListener(new View.OnClickListener() {
+        TextView infoRemedio = (TextView)findViewById(R.id.tvInfoHistorico);
+        infoRemedio.setText("A partir do horário " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)) +
+        " a cada " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)) + " horas");
+
+
+        String[] nomeCampos = new String[] {CriaBancoDados.KEY_DIA_HISTORICO, CriaBancoDados.KEY_HORA_HISTORICO};
+        int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
+
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Historico.this, R.layout.lista_itens, cursor, nomeCampos, idViews, 0);
+        lista = (ListView)findViewById(R.id.lvHistorico);
+        lista.setAdapter(adaptador);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String codigo;
+                cursor.moveToPosition(position);
+                codigo = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_ID));
+                Intent abreTela = new Intent(Historico.this, MenuRemedio.class);
+                abreTela.putExtra("codigo", codigo);
 
-                //abrir tela listar
-                Intent abreTelaCadastro = new Intent(Historico.this, Inserir.class);
-                Historico.this.startActivity(abreTelaCadastro);
+                Historico.this.startActivity(abreTela);
             }
         });
-
-        // initialize our XYPlot reference:
-        plot = (XYPlot) findViewById(R.id.plot);
-
-        // create a couple arrays of y-values to plot:
-        final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};
-        Number[] series1Numbers = {9,9.5,9,10,8,8.5,9,9,8,8};
-        Number[] series2Numbers = {8,10,9,9,9,8.5,8,9.5,10,10.5};
-
-        // turn the above arrays into XYSeries':
-        // (Y_VALS_ONLY means use the element index as the x value)
-        XYSeries series1 = new SimpleXYSeries(Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
-        XYSeries series2 = new SimpleXYSeries(Arrays.asList(series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
-
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
-        LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.GREEN,Color.GREEN,null, null);
-        LineAndPointFormatter series2Format = new LineAndPointFormatter(Color.RED,Color.RED,null, null);
-
-        // add a new series' to the xyplot:
-        plot.addSeries(series1, series1Format);
-        plot.addSeries(series2, series2Format);
     }
 
 }

@@ -26,8 +26,9 @@ public class CriaBancoDados extends SQLiteOpenHelper {
 
     // Table Names
     public static final String TABLE_REMEDIOS = "remedios";
+    public static final String TABLE_REMEDIOS_HISTORICO = "remedios_historico";
 
-    // NOTES Table - column names
+    // NOTES Table - column names TABLE_REMEDIOS
     public static final String KEY_ID = "_id";
     public static final String KEY_NOME = "nome";
     public static final String KEY_CAIXA = "caixa";
@@ -37,9 +38,13 @@ public class CriaBancoDados extends SQLiteOpenHelper {
     public static final String KEY_FUNCAO = "funcao";
     public static final String KEY_MEDICO = "medico";
 
+    // NOTES Table - column names TABLE_REMEDIOS_HISTORICO
+    public static final String KEY_ID_HISTORICO = "_id";
+    public static final String KEY_ID_REMEDIO = "_id_remedio";
+    public static final String KEY_HORA_HISTORICO = "hora";
+    public static final String KEY_DIA_HISTORICO = "dia";
 
     // Table Create Statements
-
     private static final String CREATE_TABLE_REMEDIO = "CREATE TABLE "
             + TABLE_REMEDIOS
             + "("
@@ -53,6 +58,15 @@ public class CriaBancoDados extends SQLiteOpenHelper {
             + KEY_MEDICO + " TEXT"
             + ")";
 
+    private static final String CREATE_TABLE_REMEDIO_HISTORICO = "CREATE TABLE "
+            + TABLE_REMEDIOS_HISTORICO
+            + "("
+            + KEY_ID_HISTORICO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_ID_REMEDIO + " INTEGER,"
+            + KEY_HORA_HISTORICO + " TEXT,"
+            + KEY_DIA_HISTORICO + " TEXT"
+            + ")";
+
     public CriaBancoDados(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -62,12 +76,14 @@ public class CriaBancoDados extends SQLiteOpenHelper {
 
         // creating required tables
         db.execSQL(CREATE_TABLE_REMEDIO);
+        db.execSQL(CREATE_TABLE_REMEDIO_HISTORICO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMEDIOS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMEDIOS_HISTORICO);
 
         // create new tables
         onCreate(db);

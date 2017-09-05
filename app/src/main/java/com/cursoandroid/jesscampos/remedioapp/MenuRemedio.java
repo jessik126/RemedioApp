@@ -79,6 +79,7 @@ public class MenuRemedio extends AppCompatActivity {
             public void onClick(View view) {
                 //abrir tela parear
                 Intent abreTela = new Intent(MenuRemedio.this, Historico.class);
+                abreTela.putExtra("codigo", codigo);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });

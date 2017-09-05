@@ -41,6 +41,7 @@ public class Remedio {
     }
 
     // setters
+
     public void setId(int id) {
         this.id = id;
     }
@@ -49,7 +50,9 @@ public class Remedio {
         this.nome = nome;
     }
 
-    public void setCaixa(String caixa) { this.caixa = caixa;  }
+    public void setCaixa(String caixa) {
+        this.caixa = caixa;
+    }
 
     public void setHora(String hora) {
         this.hora = hora;
@@ -67,31 +70,43 @@ public class Remedio {
         this.funcao = funcao;
     }
 
-    public void setMedico(String medico) {this.medico = medico; }
-
-
-    // getters
-    public int getId() {
-        return this.id;
+    public void setMedico(String medico) {
+        this.medico = medico;
     }
 
-    public String getNome() { return this.nome; }
+    //getters
 
-    public String getCaixa() { return this.caixa; }
 
-    public String getHora() { return this.hora; }
+    public int getId() {
+        return id;
+    }
 
-    public String getFreqDia() { return this.freqDia; }
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCaixa() {
+        return caixa;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public String getFreqDia() {
+        return freqDia;
+    }
 
     public int getFreqHora() {
-        return this.freqHora;
+        return freqHora;
     }
 
-    public String getFuncao() { return this.funcao; }
+    public String getFuncao() {
+        return funcao;
+    }
 
-    public String getMedico() { return this.medico; }
-
-
-
+    public String getMedico() {
+        return medico;
+    }
 }
 
