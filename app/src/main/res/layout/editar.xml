@@ -92,7 +92,54 @@
         android:text="Dias da semana"
         android:id="@+id/tvDiaSemanaEditar" />
 
-    <include  layout="@layout/dias_da_semana" android:id="@+id/gpDiasDaSemanaEditar" />
+    <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+        android:id="@+id/gpDiasDaSemana"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/seg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/ter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/qua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/qui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/sab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S"/>
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/dom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D"/>
+
+    </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
 
     <Space
         android:layout_width="match_parent"
@@ -118,5 +165,6 @@
         android:layout_gravity="center_horizontal"
         android:background="#c04052b5"
         android:textColor="#FFFFFF" />
+
 
 </LinearLayout>

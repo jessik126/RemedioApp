@@ -77,7 +77,7 @@ public class Editar extends AppCompatActivity {
         hora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)));
         freqHora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)));
         medico.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_MEDICO)));
-//        preencheDiasDaSemana(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQDIA)));
+        preencheDiasDaSemana(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQDIA)));
 
         Button btEditarRemedio = (Button)findViewById(R.id.btEditarRemedio);
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
