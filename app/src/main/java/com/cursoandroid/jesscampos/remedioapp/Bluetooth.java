@@ -81,7 +81,7 @@ public class Bluetooth extends AppCompatActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        
+
     }
 }
 
