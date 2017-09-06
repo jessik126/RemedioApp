@@ -42,12 +42,12 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
 
-        //evento parear
+        //evento bluetooth
         btParear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela parear
-                Intent abreTela = new Intent(MenuPrincipal.this, Parear.class);
+                //abrir tela bluetooth
+                Intent abreTela = new Intent(MenuPrincipal.this, Bluetooth.class);
                 MenuPrincipal.this.startActivity(abreTela);
             }
         });

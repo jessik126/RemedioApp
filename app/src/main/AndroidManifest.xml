@@ -30,7 +30,7 @@
         <activity android:name=".Remedio.Listar"/>
         <activity android:name=".Remedio.Editar"/>
         <activity android:name=".Remedio.Historico"/>
-        <activity android:name=".Parear"/>
+        <activity android:name=".Bluetooth"/>
     </application>
 
 </manifest>

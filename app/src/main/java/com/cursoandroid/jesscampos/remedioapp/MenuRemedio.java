@@ -77,7 +77,7 @@ public class MenuRemedio extends AppCompatActivity {
         btHistoricoRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela parear
+                //abrir tela bluetooth
                 Intent abreTela = new Intent(MenuRemedio.this, Historico.class);
                 abreTela.putExtra("codigo", codigo);
                 MenuRemedio.this.startActivity(abreTela);
