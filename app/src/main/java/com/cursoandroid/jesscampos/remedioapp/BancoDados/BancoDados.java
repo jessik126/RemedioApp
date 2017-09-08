@@ -73,6 +73,40 @@ public class BancoDados {
         return cursor;
     }
 
+    public Remedio carregaDadosPorCaixa(String caixa){
+        Cursor cursor;
+        Remedio remedio = null;
+        String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
+        String where = CriaBancoDados.KEY_CAIXA + "=\"" + caixa + "\"";
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBancoDados.TABLE_REMEDIOS,campos,where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        try {
+            if (cursor.moveToFirst()) {
+
+                remedio = new Remedio();
+                remedio.setId(cursor.getInt(cursor.getColumnIndex(CriaBancoDados.KEY_ID)));
+                remedio.setNome(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_NOME)));
+                remedio.setCaixa(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_CAIXA)));
+                remedio.setHora(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_HORA)));
+                remedio.setFreqHora((cursor.getInt(cursor.getColumnIndex(CriaBancoDados.KEY_FREQHORA))));
+                remedio.setMedico(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_MEDICO)));
+                remedio.setFreqDia(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_FREQDIA)));
+                remedio.setFuncao("");
+
+            }
+
+        } finally {
+            cursor.close();
+        }
+        db.close();
+
+        return remedio;
+    }
+
     public void alteraRegistro(int id, Remedio remedio){
         ContentValues valores = new ContentValues();
         valores.put(CriaBancoDados.KEY_NOME, remedio.nome);

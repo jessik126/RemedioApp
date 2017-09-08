@@ -181,7 +181,8 @@ public class Sincronizar extends Activity {
 
             for (Remedio remedio : listaRemedio ) {
                 String[] horaMin = remedio.getHora().split(":");
-                envia = "{\"cx\":\"" + remedio.getCaixa() +
+                envia = "{\"id\":" + remedio.getId() +
+                        ",\"cx\":\"" + remedio.getCaixa() +
                         "\",\"h\":" + horaMin[0] +
                         ",\"m\":" + horaMin[1] +
                         ",\"fd\":\"" + remedio.getFreqDia() +

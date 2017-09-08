@@ -1,6 +1,8 @@
 package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,15 +29,21 @@ import com.nex3z.togglebuttongroup.button.CircularToggle;
  * Created by Jessica on 22/07/2017.
  */
 public class Inserir extends AppCompatActivity {
+    private AlertDialog alerta;
+    private AlertDialog.Builder builder;
     private EditText hora;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String caixa;
     MultiSelectToggleGroup gpDiasDaSemana;
+    Remedio remedio = new Remedio();
+    Remedio remedioAntigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remedio_inserir);
+
+        criaModal();
 
         Button botao = (Button)findViewById(R.id.btInserir);
         botao.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +65,10 @@ public class Inserir extends AppCompatActivity {
                     diasSelecionados += child.isChecked() ? '1' : '0';
                 }
 
-                Remedio remedio = new Remedio();
+                BancoDados crud = new BancoDados(getBaseContext());
+
+                remedioAntigo = crud.carregaDadosPorCaixa(caixa);
+
                 remedio.setNome(nome.getText().toString());
                 remedio.setCaixa(caixa);
                 remedio.setHora(hora.getText().toString());
@@ -66,13 +77,9 @@ public class Inserir extends AppCompatActivity {
                 remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
 
-                BancoDados crud = new BancoDados(getBaseContext());
-                String resultado = crud.addRemedio(remedio);
-                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
-                startActivity(intent);
-                finish();
+                if(remedioAntigo != null) {
+                    alerta.show();
+                }
             }
         });
 
@@ -101,7 +108,28 @@ public class Inserir extends AppCompatActivity {
                 hora.setText(date);
             }
         };
-
     }
 
+    private void criaModal() {
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("Atenção");
+        builder.setMessage("Já existe um remédio nessa caixa, deseja substituí-lo?");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                BancoDados crud = new BancoDados(getBaseContext());
+                crud.desativaRegistro(remedioAntigo.getId());
+                crud.addRemedio(remedio);
+                Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+            }
+        });
+
+        alerta = builder.create();
+    }
 }
