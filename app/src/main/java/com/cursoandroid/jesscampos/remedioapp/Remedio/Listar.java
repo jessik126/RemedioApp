@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
-import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
@@ -25,7 +24,7 @@ public class Listar extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listar);
+        setContentView(R.layout.remedio_listar);
 
         //banco
         BancoDados crud = new BancoDados(getBaseContext());
@@ -34,7 +33,7 @@ public class Listar extends Activity {
         String[] nomeCampos = new String[] {CriaBancoDados.KEY_CAIXA, CriaBancoDados.KEY_NOME};
         int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
 
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Listar.this, R.layout.lista_itens, cursor, nomeCampos, idViews, 0);
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Listar.this, R.layout.util_lista2, cursor, nomeCampos, idViews, 0);
         lista = (ListView)findViewById(R.id.lvRemedios);
         lista.setAdapter(adaptador);
 

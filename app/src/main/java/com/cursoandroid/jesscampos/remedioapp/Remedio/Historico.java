@@ -2,26 +2,18 @@ package com.cursoandroid.jesscampos.remedioapp.Remedio;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYSeries;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
-
-import java.util.Arrays;
 
 /**
  * Created by Jessica on 23/07/2017.
@@ -35,7 +27,7 @@ public class Historico extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.historico);
+        setContentView(R.layout.remedio_historico);
 
         //banco
         BancoDados crud = new BancoDados(getBaseContext());
@@ -52,7 +44,7 @@ public class Historico extends AppCompatActivity {
         String[] nomeCampos = new String[] {CriaBancoDados.KEY_DIA_HISTORICO, CriaBancoDados.KEY_HORA_HISTORICO};
         int[] idViews = new int[] {R.id.idListaCaixa, R.id.idListaNome};
 
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Historico.this, R.layout.lista_itens, cursor, nomeCampos, idViews, 0);
+        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(Historico.this, R.layout.util_lista2, cursor, nomeCampos, idViews, 0);
         lista = (ListView)findViewById(R.id.lvHistorico);
         lista.setAdapter(adaptador);
 

@@ -13,14 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
-import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.CircularToggle;
@@ -46,7 +43,7 @@ public class Editar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.editar);
+        setContentView(R.layout.remedio_editar);
 
 
         nome = (EditText)findViewById(R.id.etNomeEditar);

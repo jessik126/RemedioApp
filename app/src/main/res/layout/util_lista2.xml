@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:text="Caixa"
+        android:text="Texto1"
         android:textSize="18sp" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:text="Nome"
+        android:text="Texto2"
         android:textSize="18sp" />
 
 </GridLayout>

@@ -17,6 +17,13 @@ public class Remedio {
 
     // constructors
     public Remedio() {
+        this.nome = "";
+        this.caixa = "";
+        this.hora = "0:0";
+        this.freqDia = "0000000";
+        this.freqHora = 0;
+        this.funcao = "";
+        this.medico = "";
     }
 
     public Remedio(String nome, String caixa, String hora, String freqDia, int freqHora, String funcao, String medico) {

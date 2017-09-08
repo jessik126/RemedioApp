@@ -36,11 +36,11 @@ public class MenuRemedio extends AppCompatActivity {
         TextView nomeTela = (TextView)findViewById(R.id.tvMenuRemedio);
         nomeTela.setText(nomeTela.getText() + " " + cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
 
-        //evento editar
+        //evento remedio_editar
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela inserir
+                //abrir tela remedio_inserir
                 Intent abreTela = new Intent(MenuRemedio.this, Editar.class);
                 abreTela.putExtra("codigo", codigo);
                 MenuRemedio.this.startActivity(abreTela);
@@ -54,7 +54,7 @@ public class MenuRemedio extends AppCompatActivity {
                 BancoDados crud = new BancoDados(getBaseContext());
                 crud.desativaRegistro(Integer.parseInt(codigo));
 
-                //abrir tela inserir
+                //abrir tela remedio_inserir
                 Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
@@ -67,17 +67,17 @@ public class MenuRemedio extends AppCompatActivity {
                 BancoDados crud = new BancoDados(getBaseContext());
                 crud.deletaRegistro(Integer.parseInt(codigo));
 
-                //abrir tela inserir
+                //abrir tela remedio_inserir
                 Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });
 
-        //evento historico
+        //evento remedio_historico
         btHistoricoRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrir tela bluetooth
+                //abrir tela bluetooth_sincronizar
                 Intent abreTela = new Intent(MenuRemedio.this, Historico.class);
                 abreTela.putExtra("codigo", codigo);
                 MenuRemedio.this.startActivity(abreTela);

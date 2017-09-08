@@ -35,7 +35,7 @@ public class Inserir extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inserir);
+        setContentView(R.layout.remedio_inserir);
 
         Button botao = (Button)findViewById(R.id.btInserir);
         botao.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,6 @@ public class Inserir extends AppCompatActivity {
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker datePicker, int hourOfDay, int minute) {
-
                 String date = hourOfDay + ":" + minute;
                 hora.setText(date);
             }

@@ -11,8 +11,10 @@
     <string name="inserir">Inserir</string>
     <string name="inserirMedicamento">Inserir Medicamentos</string>
     <string name="listar">Listar Medicamentos</string>
-    <string name="parear">Sincronizar caixinha</string>
-    <string name="lista">Lista de Medicamentos em Uso</string>
+    <string name="parear">Conectar bluetooth</string>
+    <string name="sincronizar">Sincronizar dados</string>
+
+    <string name="lista">Lista de Medicamentos</string>
     <string name="menu">Menu</string>
     <string name="onoff">ON/OFF</string>
     <string name="caixa">Caixa</string>

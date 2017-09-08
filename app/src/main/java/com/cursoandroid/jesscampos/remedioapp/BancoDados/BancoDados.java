@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Jessica on 03/09/2017.
  */
@@ -37,7 +40,7 @@ public class BancoDados {
         db.close();
 
         if (resultado ==-1)
-            return "Erro ao inserir registro";
+            return "Erro ao remedio_inserir registro";
         else
             return "Registro Inserido com sucesso";
 
@@ -95,13 +98,58 @@ public class BancoDados {
 
     public void desativaRegistro(int id){
         ContentValues valores = new ContentValues();
-        valores.put(CriaBancoDados.KEY_CAIXA, "");
+        valores.putNull(CriaBancoDados.KEY_CAIXA);
         
         String where = CriaBancoDados.KEY_ID + "=" + id;
         db = banco.getWritableDatabase();
         db.update(CriaBancoDados.TABLE_REMEDIOS,valores,where,null);
         db.close();
     }
+
+    public List<Remedio> obterRemediosAtivos(){
+        Cursor cursor;
+        String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
+        String where = CriaBancoDados.KEY_NOME + " IS NOT NULL";
+        db = banco.getReadableDatabase();
+        cursor = db.query(CriaBancoDados.TABLE_REMEDIOS,campos,where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return obterRemedioPorCursor(cursor);
+    }
+
+    private List<Remedio> obterRemedioPorCursor(Cursor cursor) {
+        List<Remedio> remedios = new ArrayList<Remedio>();
+        if(cursor == null)
+            return remedios;
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+
+                    Remedio remedio = new Remedio();
+                    remedio.setId(cursor.getInt(cursor.getColumnIndex(CriaBancoDados.KEY_ID)));
+                    remedio.setNome(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_NOME)));
+                    remedio.setCaixa(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_CAIXA)));
+                    remedio.setHora(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_HORA)));
+                    remedio.setFreqHora((cursor.getInt(cursor.getColumnIndex(CriaBancoDados.KEY_FREQHORA))));
+                    remedio.setMedico(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_MEDICO)));
+                    remedio.setFreqDia(cursor.getString(cursor.getColumnIndex(CriaBancoDados.KEY_FREQDIA)));
+                    remedio.setFuncao("");
+
+                    remedios.add(remedio);
+
+                } while (cursor.moveToNext());
+            }
+
+        } finally {
+            cursor.close();
+        }
+        return remedios;
+    }
+
 
     //TABLE_REMEDIOS_HISTORICO
     public String insereHistorico(RemedioHistorico historico){
@@ -118,7 +166,7 @@ public class BancoDados {
         db.close();
 
         if (resultado ==-1)
-            return "Erro ao inserir registro";
+            return "Erro ao remedio_inserir registro";
         else
             return "Registro Inserido com sucesso";
     }

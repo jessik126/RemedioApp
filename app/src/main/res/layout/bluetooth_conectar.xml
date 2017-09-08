@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/remediobg"
+    android:weightSum="1">
+
+
+    <TextView android:id="@+id/tvSelecione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Selecione:"
+        android:visibility="gone"
+        android:background="#666"
+        android:textColor="#fff"
+        android:paddingLeft="5dp"
+        />
+
+    <ListView android:id="@+id/lvDispositivosPareados"
+        android:layout_width="match_parent"
+        android:layout_height="311dp"
+        android:stackFromBottom="false"
+        android:layout_weight="0.91" />
+
+    <TextView
+        android:id="@+id/tvConectando"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvInformacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ccb3b3b3"
+        android:text="Se o dispositivo não estiver listado, pareie primeiro nas configurações do Android."
+        android:textSize="18dp" />
+
+</LinearLayout>
