@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
@@ -89,11 +90,29 @@ public class Editar extends AppCompatActivity {
                     diasSelecionados += child.isChecked() ? '1' : '0';
                 }
 
+                if(diasSelecionados.equals("0000000")) {
+                    Toast.makeText(getBaseContext(), "Por favor, selecione ao menos um dia da semana.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(nome.getText().toString().isEmpty() || caixa.isEmpty() || hora.getText().toString().isEmpty() ||
+                        freqHora.getText().toString().isEmpty() || medico.getText().toString().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                int freqHoraValor = Integer.parseInt(freqHora.getText().toString());
+
+                if(freqHoraValor < 0 || freqHoraValor > 24) {
+                    Toast.makeText(getBaseContext(), "A frequência do alarme deve ser menor do que 24.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Remedio remedio = new Remedio();
                 remedio.setNome(nome.getText().toString());
                 remedio.setCaixa(caixa);
                 remedio.setHora(hora.getText().toString());
-                remedio.setFreqHora(Integer.parseInt(freqHora.getText().toString()));
+                remedio.setFreqHora(freqHoraValor);
                 remedio.setMedico(medico.getText().toString());
                 remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");

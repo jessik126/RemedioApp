@@ -53,6 +53,10 @@ public class Inserir extends AppCompatActivity {
 
                 //EditText hora = (EditText)findViewById((R.id.etHora));
                 RadioGroup rbGrupoCaixa = (RadioGroup) findViewById(R.id.rbuttonGroup);
+                if(rbGrupoCaixa.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getBaseContext(), "Por favor, selecione uma caixa.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String caixa = ((RadioButton) findViewById(rbGrupoCaixa.getCheckedRadioButtonId())).getText().toString();
 
                 EditText freqHora = (EditText)findViewById(R.id.etFreqHora);
@@ -65,6 +69,24 @@ public class Inserir extends AppCompatActivity {
                     diasSelecionados += child.isChecked() ? '1' : '0';
                 }
 
+                if(diasSelecionados.equals("0000000")) {
+                    Toast.makeText(getBaseContext(), "Por favor, selecione ao menos um dia da semana.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(nome.getText().toString().isEmpty() || caixa.isEmpty() || hora.getText().toString().isEmpty() ||
+                        freqHora.getText().toString().isEmpty() || medico.getText().toString().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Por favor, preencha todos os campos.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                int freqHoraValor = Integer.parseInt(freqHora.getText().toString());
+
+                if(freqHoraValor < 0 || freqHoraValor > 24) {
+                    Toast.makeText(getBaseContext(), "A frequência do alarme deve ser menor do que 24.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 BancoDados crud = new BancoDados(getBaseContext());
 
                 remedioAntigo = crud.carregaDadosPorCaixa(caixa);
@@ -72,10 +94,11 @@ public class Inserir extends AppCompatActivity {
                 remedio.setNome(nome.getText().toString());
                 remedio.setCaixa(caixa);
                 remedio.setHora(hora.getText().toString());
-                remedio.setFreqHora(Integer.parseInt(freqHora.getText().toString()));
+                remedio.setFreqHora(freqHoraValor);
                 remedio.setMedico(medico.getText().toString());
                 remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
+
 
                 if(remedioAntigo != null) {
                     alerta.show();
@@ -121,6 +144,7 @@ public class Inserir extends AppCompatActivity {
                 crud.desativaRegistro(remedioAntigo.getId());
                 crud.addRemedio(remedio);
                 Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
+                Toast.makeText(getBaseContext(), "Remédio inserido com sucesso.", Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 finish();
             }
