@@ -162,7 +162,8 @@ public class MenuPrincipal extends AppCompatActivity {
     boolean enviaAlarmePorCaixa(Remedio remedio, OutputStream mmOutStream){
         String envia = "";
         String[] horaMin = remedio.getHora().split(":");
-        envia = "{\"cx\":\"" + remedio.getCaixa() +
+        envia = "{\"id\":" + remedio.getId() +
+                ",\"cx\":\"" + remedio.getCaixa() +
                 "\",\"h\":" + horaMin[0] +
                 ",\"m\":" + horaMin[1] +
                 ",\"fd\":\"" + remedio.getFreqDia() +
