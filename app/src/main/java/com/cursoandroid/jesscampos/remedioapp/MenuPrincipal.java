@@ -1,6 +1,5 @@
 package com.cursoandroid.jesscampos.remedioapp;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
 import com.cursoandroid.jesscampos.remedioapp.Bluetooth.Conectar;
-import com.cursoandroid.jesscampos.remedioapp.Bluetooth.Sincronizar;
+import com.cursoandroid.jesscampos.remedioapp.Bluetooth.GerenciadorBluetooth;
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Inserir;
 import com.cursoandroid.jesscampos.remedioapp.Remedio.Listar;
 
@@ -94,89 +93,18 @@ public class MenuPrincipal extends AppCompatActivity {
         btSincronizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //abrir tela bluetooth_sincronizar
-                /*Intent abreTela = new Intent(MenuPrincipal.this, Sincronizar.class);
-                abreTela.putExtra("enderecoDispositivo", address);
-                MenuPrincipal.this.startActivity(abreTela);*/
                 criaSocket();
             }
         });
     }
 
     void criaSocket(){
-        BluetoothAdapter btAdapter;
-        BluetoothDevice device;
-        BluetoothSocket btSocket = null;
-        try {
-            //create device and set the MAC address
-            btAdapter = BluetoothAdapter.getDefaultAdapter();
-            device = btAdapter.getRemoteDevice(address);
-            btSocket = createBluetoothSocket(device);
-            boolean a = btSocket.isConnected();
-            btSocket.connect();
-            OutputStream mmOutStream = btSocket.getOutputStream();
-            enviaAlarme(mmOutStream);
+        GerenciadorBluetooth gerenciador = (GerenciadorBluetooth) getApplication();
 
-            btSocket.close();
-        }
-        catch(IOException e){
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
-        }
-        finally {
-            try {
-                btSocket.close();
-            } catch (IOException e1) {
-            }
-        }
-    }
-
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-
-        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-        //creates secure outgoing connecetion with BT device using UUID
-    }
-
-    public void enviaAlarme(OutputStream mmOutStream) {
-        boolean caixas[] = {false,false,false};
-
-        //banco
-        BancoDados crud = new BancoDados(getBaseContext());
-        List<Remedio> listaRemedio = crud.obterRemediosAtivos();
-
-        for (Remedio remedio : listaRemedio ) {
-            int numCaixa = (int) remedio.getCaixa().toCharArray()[0] - 65;
-            caixas[numCaixa] = enviaAlarmePorCaixa(remedio, mmOutStream);
-        }
-        for (int i=0; i<caixas.length; i++){
-            if(!caixas[i]){
-                char nomeCaixa = (char)(i+65);
-                Remedio remedio = new Remedio();
-                remedio.setCaixa(Character.toString(nomeCaixa));
-                caixas[i] = enviaAlarmePorCaixa(remedio, mmOutStream);
-            }
-        }
-    }
-
-    boolean enviaAlarmePorCaixa(Remedio remedio, OutputStream mmOutStream){
-        String envia = "";
-        String[] horaMin = remedio.getHora().split(":");
-        envia = "{\"id\":" + remedio.getId() +
-                ",\"cx\":\"" + remedio.getCaixa() +
-                "\",\"h\":" + horaMin[0] +
-                ",\"m\":" + horaMin[1] +
-                ",\"fd\":\"" + remedio.getFreqDia() +
-                "\",\"fh\":" + remedio.getFreqHora() + "}";
-
-        byte[] msgBuffer = envia.getBytes();           //converts entered String into bytes
-        try {
-            mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
-            return true;
-        } catch (IOException e) {
-            //if you cannot write, close the application
-            Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
-            return false;
+        if(gerenciador.sincronizaAlarme()) {
+            Toast.makeText(getBaseContext(), "Dados enviados com sucesso", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getBaseContext(), "Falha ao enviar ou receber dados", Toast.LENGTH_LONG).show();
         }
     }
 }

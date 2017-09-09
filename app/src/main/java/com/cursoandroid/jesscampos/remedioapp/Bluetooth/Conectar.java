@@ -96,22 +96,18 @@ public class Conectar extends Activity {
             BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
-
             // Make an intent to start next activity while taking an extra which is the MAC address.
             Intent i = new Intent(Conectar.this, MenuPrincipal.class);
 
-            try {
-                BluetoothSocket btSocket = createBluetoothSocket(device);
-                btSocket.connect();
+            GerenciadorBluetooth gerenciador = (GerenciadorBluetooth) getApplication();
+
+            if(gerenciador.abrirSocket(address)) {
                 i.putExtra("conectado", true);
                 i.putExtra("enderecoDispositivo", address);
-                btSocket.close();
                 startActivity(i);
-            } catch (IOException e) {
+            } else {
                 Toast.makeText(getBaseContext(), "Falha ao conectar o dispositivo", Toast.LENGTH_LONG).show();
             }
-
-
         }
     };
 
@@ -129,11 +125,5 @@ public class Conectar extends Activity {
                 startActivityForResult(enableBtIntent, 1);
             }
         }
-    }
-
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-
-        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-        //creates secure outgoing connecetion with BT device using UUID
     }
 }

@@ -22,6 +22,12 @@ public class RemedioHistorico {
         this.dia = dia;
     }
 
+    public RemedioHistorico(int idRemedio, String hora, String dia) {
+        this.idRemedio = idRemedio;
+        this.hora = hora;
+        this.dia = dia;
+    }
+
 
     //setters
 

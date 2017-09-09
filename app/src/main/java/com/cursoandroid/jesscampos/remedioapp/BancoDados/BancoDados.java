@@ -143,7 +143,7 @@ public class BancoDados {
     public List<Remedio> obterRemediosAtivos(){
         Cursor cursor;
         String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
-        String where = CriaBancoDados.KEY_NOME + " IS NOT NULL";
+        String where = CriaBancoDados.KEY_CAIXA + " IS NOT NULL";
         db = banco.getReadableDatabase();
         cursor = db.query(CriaBancoDados.TABLE_REMEDIOS,campos,where, null, null, null, null, null);
 
