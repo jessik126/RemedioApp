@@ -30,7 +30,6 @@ import com.nex3z.togglebuttongroup.button.CircularToggle;
  */
 public class Inserir extends AppCompatActivity {
     private AlertDialog alerta;
-    private AlertDialog.Builder builder;
     private EditText hora;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String caixa;
@@ -99,9 +98,10 @@ public class Inserir extends AppCompatActivity {
                 remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
 
-
                 if(remedioAntigo != null) {
                     alerta.show();
+                } else {
+                    insereRemedio(false);
                 }
             }
         });
@@ -134,19 +134,14 @@ public class Inserir extends AppCompatActivity {
     }
 
     private void criaModal() {
+        AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Atenção");
         builder.setMessage("Já existe um remédio nessa caixa, deseja substituí-lo?");
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                BancoDados crud = new BancoDados(getBaseContext());
-                crud.desativaRegistro(remedioAntigo.getId());
-                crud.addRemedio(remedio);
-                Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
-                Toast.makeText(getBaseContext(), "Remédio inserido com sucesso.", Toast.LENGTH_LONG).show();
-                startActivity(intent);
-                finish();
+                insereRemedio(true);
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -155,5 +150,17 @@ public class Inserir extends AppCompatActivity {
         });
 
         alerta = builder.create();
+    }
+
+    private void insereRemedio(boolean desativaAnterior) {
+        BancoDados crud = new BancoDados(getBaseContext());
+        if(desativaAnterior) {
+            crud.desativaRegistro(remedioAntigo.getId());
+        }
+        crud.addRemedio(remedio);
+        Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
+        Toast.makeText(getBaseContext(), "Remédio inserido com sucesso.", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+        finish();
     }
 }
