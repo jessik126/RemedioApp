@@ -77,10 +77,15 @@
         android:layout_gravity="center_horizontal"
         android:enabled="false" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1" />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sincronizar"
+        android:text="Desconectar bluetooth"
         android:id="@+id/btDesconectar"
         android:textColor="#FFFFFF"
         android:background="#334052b5"
