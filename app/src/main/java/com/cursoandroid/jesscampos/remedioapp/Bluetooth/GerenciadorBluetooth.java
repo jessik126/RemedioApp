@@ -4,6 +4,7 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class GerenciadorBluetooth extends Application {
     private BluetoothDevice device;
     private BluetoothSocket btSocket;
     private static final String TAG = "Menu Principal";
+    private Context context;
 
     @Override
     public void onTerminate() {
@@ -66,7 +68,12 @@ public class GerenciadorBluetooth extends Application {
         }
     }
 
-    public boolean sincronizaAlarme() {
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+    }
+
+    public boolean sincronizaAlarme(Context context) {
+        this.context = context;
         try{
             OutputStream mmOutStream = btSocket.getOutputStream();
             InputStream mmInStream = btSocket.getInputStream();
@@ -85,7 +92,7 @@ public class GerenciadorBluetooth extends Application {
 
         //banco
         BancoDados crud = new BancoDados(getBaseContext());
-        List<Remedio> listaRemedio = crud.obterRemediosAtivos();
+        List<Remedio> listaRemedio = crud.listarRemedios();
 
         for (Remedio remedio : listaRemedio ) {
             int numCaixa = (int) remedio.getCaixa().toCharArray()[0] - 65;
@@ -99,6 +106,7 @@ public class GerenciadorBluetooth extends Application {
                 caixas[i] = enviaAlarmePorCaixa(remedio, mmOutStream);
             }
         }
+        Toast.makeText(context, "Envio terminado", Toast.LENGTH_LONG).show();
     }
 
     private boolean enviaAlarmePorCaixa(Remedio remedio, OutputStream mmOutStream){
@@ -114,10 +122,12 @@ public class GerenciadorBluetooth extends Application {
         byte[] msgBuffer = envia.getBytes();           //converts entered String into bytes
         try {
             mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
+            Log.e(TAG, "Envio completo - caixa " + remedio.getCaixa());
+            Toast.makeText(context, "Envio completo - caixa " + remedio.getCaixa(), Toast.LENGTH_LONG).show();
             return true;
         } catch (IOException e) {
             //if you cannot write, close the application
-            Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Connection Failure", Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -136,29 +146,35 @@ public class GerenciadorBluetooth extends Application {
 //        break;
 //    }
 //    processaHistorico(readMessage);
+
     public void recebeHistorico(InputStream mmInStream) {
-        byte[] buffer = new byte[20];
+        byte[] buffer = new byte[1];
         int bytes;
+        String jsonRecebido = "";
+        String readMessage = "";
 
         // Keep looping to listen for received messages
-        while (true) {
+        while (!readMessage.equals("!")) {
             try {
-                bytes = mmInStream.read(buffer);            //read bytes from input buffer
-                String readMessage = new String(buffer, 0, bytes);
-                if(readMessage.equals("#")) {
-                    break;
-                }
-                processaHistorico(readMessage);
+                bytes = mmInStream.read(buffer);           //read bytes from input buffer
+                readMessage = new String(buffer, 0, bytes);
+                jsonRecebido = jsonRecebido + readMessage;
 
+                if(readMessage.equals("}")) {
+                    processaHistorico(jsonRecebido);
+                    jsonRecebido = "";
+                }
             } catch (IOException e) {
                 break;
             }
         }
+
     }
 
     private void enviaSinalHistorico(OutputStream mmOutStream){
         try {
             mmOutStream.write("historico".getBytes());
+            Toast.makeText(getBaseContext(), "Inicio recebimento Historico", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
         }
     }
@@ -184,7 +200,5 @@ public class GerenciadorBluetooth extends Application {
 
     }
 
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-    }
+
 }

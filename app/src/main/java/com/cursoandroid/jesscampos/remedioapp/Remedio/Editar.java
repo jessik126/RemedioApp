@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.Remedio;
+import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.R;
 import com.nex3z.togglebuttongroup.MultiSelectToggleGroup;
 import com.nex3z.togglebuttongroup.button.CircularToggle;
@@ -47,19 +48,24 @@ public class Editar extends AppCompatActivity {
         setContentView(R.layout.remedio_editar);
 
 
-        nome = (EditText)findViewById(R.id.etNomeEditar);
-        hora = (EditText)findViewById((R.id.etHoraEditar));
-        freqHora = (EditText)findViewById(R.id.etFreqHoraEditar);
-        medico = (EditText)findViewById(R.id.etMedicoEditar);
+        nome = (EditText) findViewById(R.id.etNomeEditar);
+        hora = (EditText) findViewById((R.id.etHoraEditar));
+        freqHora = (EditText) findViewById(R.id.etFreqHoraEditar);
+        medico = (EditText) findViewById(R.id.etMedicoEditar);
         rbGrupoCaixa = (RadioGroup) findViewById(R.id.rbuttonGroupEditar);
         gpDiasDaSemana = (MultiSelectToggleGroup) findViewById(R.id.gpDiasDaSemana);
 
         crud = new BancoDados(getBaseContext());
         codigo = this.getIntent().getStringExtra("codigo");
-        cursor = crud.carregaDadoById(Integer.parseInt(codigo));
+        cursor = crud.carregaRemedioPorId(Integer.parseInt(codigo));
 
         String caixaBanco = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_CAIXA));
-        switch(caixaBanco) {
+
+        if (caixaBanco == null) {
+            caixaBanco = " ";
+        }
+
+        switch (caixaBanco) {
             case "A":
                 rbGrupoCaixa.check(R.id.rbuttonAEditar);
                 break;
@@ -69,7 +75,11 @@ public class Editar extends AppCompatActivity {
             case "C":
                 rbGrupoCaixa.check(R.id.rbuttonCEditar);
                 break;
+            default:
+                rbGrupoCaixa.clearCheck();
+                break;
         }
+
 
         nome.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
         hora.setText(cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)));
@@ -117,7 +127,7 @@ public class Editar extends AppCompatActivity {
                 remedio.setFreqDia(diasSelecionados);
                 remedio.setFuncao("");
 
-                crud.alteraRegistro(Integer.parseInt(codigo), remedio);
+                crud.alteraRemedio(Integer.parseInt(codigo), remedio);
                 Intent intent = new Intent(Editar.this, Listar.class);
                 startActivity(intent);
                 finish();
@@ -146,10 +156,17 @@ public class Editar extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker datePicker, int hourOfDay, int minute) {
 
-                String date = hourOfDay + ":" + minute;
+                String date = String.format("%02d:%02d", hourOfDay, minute); //hourOfDay + ":" + minute;
                 hora.setText(date);
             }
         };
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,MenuPrincipal.class);
+        startActivity(intent);
     }
 
     private void preencheDiasDaSemana(String diasSelecionados) {

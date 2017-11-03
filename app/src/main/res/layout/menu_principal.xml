@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/menu"
+        android:text="Menu Principal"
         android:id="@+id/tvMenu" />
 
     <Space

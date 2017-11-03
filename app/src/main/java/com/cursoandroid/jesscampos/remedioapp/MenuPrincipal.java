@@ -2,6 +2,7 @@ package com.cursoandroid.jesscampos.remedioapp;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,8 @@ public class MenuPrincipal extends AppCompatActivity {
         Button btInserir = (Button) findViewById(R.id.btInserir);
         Button btListar = (Button) findViewById(R.id.btListar);
         Button btParear = (Button) findViewById(R.id.btParear);
-        Button btSincronizar = (Button) findViewById(R.id.btSincronizar);
+        final Button btSincronizar = (Button) findViewById(R.id.btSincronizar);
+        final Button btDesconectar = (Button) findViewById(R.id.btDesconectar);
 
         //evento inserir medicamentos
         btInserir.setOnClickListener(new View.OnClickListener() {
@@ -96,14 +98,32 @@ public class MenuPrincipal extends AppCompatActivity {
                 criaSocket();
             }
         });
+
+        //evento desconectar bluetooth
+        btDesconectar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btSincronizar.setEnabled(false);
+                btSincronizar.setBackgroundColor(0x334052b5);
+                btDesconectar.setEnabled(false);
+                btDesconectar.setBackgroundColor(0x334052b5);
+            }
+        });
     }
 
     void criaSocket(){
         GerenciadorBluetooth gerenciador = (GerenciadorBluetooth) getApplication();
+        Button btSincronizar = (Button) findViewById(R.id.btSincronizar);
+        Button btDesconectar = (Button) findViewById(R.id.btDesconectar);
 
-        if(gerenciador.sincronizaAlarme()) {
+        Context context = MenuPrincipal.this;
+        if(gerenciador.sincronizaAlarme(context)) {
             Toast.makeText(getBaseContext(), "Dados enviados com sucesso", Toast.LENGTH_LONG).show();
+            btDesconectar.setEnabled(true);
+            btDesconectar.setBackgroundColor(0xFF4052b5);
         } else {
+            btSincronizar.setEnabled(false);
+            btSincronizar.setBackgroundColor(0x334052b5);
             Toast.makeText(getBaseContext(), "Falha ao enviar ou receber dados", Toast.LENGTH_LONG).show();
         }
     }

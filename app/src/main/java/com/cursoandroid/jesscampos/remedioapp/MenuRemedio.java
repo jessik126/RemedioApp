@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,14 +28,15 @@ public class MenuRemedio extends AppCompatActivity {
 
         Button btEditarRemedio = (Button) findViewById(R.id.btEditarRemedio);
         Button btDesativarRemedio = (Button) findViewById(R.id.btDesativarRemedio);
-        Button btDeletarRemedio = (Button) findViewById(R.id.btDeletarRemedio);
+        //Button btDeletarRemedio = (Button) findViewById(R.id.btDeletarRemedio);
         Button btHistoricoRemedio = (Button) findViewById(R.id.btHistoricoRemedio);
 
         codigo = this.getIntent().getStringExtra("codigo");
         BancoDados crud = new BancoDados(getBaseContext());
-        Cursor cursor = crud.carregaDadoById(Integer.parseInt(codigo));
+        Cursor cursor = crud.carregaRemedioPorId(Integer.parseInt(codigo));
         TextView nomeTela = (TextView)findViewById(R.id.tvMenuRemedio);
-        nomeTela.setText(nomeTela.getText() + " " + cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
+        nomeTela.setText(nomeTela.getText() + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
+        nomeTela.setGravity(Gravity.CENTER_HORIZONTAL);
 
         //evento remedio_editar
         btEditarRemedio.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +54,7 @@ public class MenuRemedio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 BancoDados crud = new BancoDados(getBaseContext());
-                crud.desativaRegistro(Integer.parseInt(codigo));
+                crud.desativaRemedio(Integer.parseInt(codigo));
 
                 //abrir tela remedio_inserir
                 Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
@@ -61,7 +63,7 @@ public class MenuRemedio extends AppCompatActivity {
         });
 
         //evento deletar
-        btDeletarRemedio.setOnClickListener(new View.OnClickListener() {
+       /* btDeletarRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BancoDados crud = new BancoDados(getBaseContext());
@@ -71,7 +73,7 @@ public class MenuRemedio extends AppCompatActivity {
                 Intent abreTela = new Intent(MenuRemedio.this, Listar.class);
                 MenuRemedio.this.startActivity(abreTela);
             }
-        });
+        });*/
 
         //evento remedio_historico
         btHistoricoRemedio.setOnClickListener(new View.OnClickListener() {
@@ -83,5 +85,12 @@ public class MenuRemedio extends AppCompatActivity {
                 MenuRemedio.this.startActivity(abreTela);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,Listar.class);
+        startActivity(intent);
     }
 }

@@ -88,7 +88,7 @@ public class Inserir extends AppCompatActivity {
 
                 BancoDados crud = new BancoDados(getBaseContext());
 
-                remedioAntigo = crud.carregaDadosPorCaixa(caixa);
+                remedioAntigo = crud.carregaRemedioPorCaixa(caixa);
 
                 remedio.setNome(nome.getText().toString());
                 remedio.setCaixa(caixa);
@@ -118,7 +118,7 @@ public class Inserir extends AppCompatActivity {
                         Inserir.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mTimeSetListener,
-                        hour,minute, DateFormat.is24HourFormat(Inserir.this));
+                        hour, minute, DateFormat.is24HourFormat(Inserir.this));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -127,10 +127,17 @@ public class Inserir extends AppCompatActivity {
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker datePicker, int hourOfDay, int minute) {
-                String date = hourOfDay + ":" + minute;
+                String date = String.format("%02d:%02d", hourOfDay, minute); //hourOfDay + ":" + minute;
                 hora.setText(date);
             }
         };
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,MenuPrincipal.class);
+        startActivity(intent);
     }
 
     private void criaModal() {
@@ -155,9 +162,9 @@ public class Inserir extends AppCompatActivity {
     private void insereRemedio(boolean desativaAnterior) {
         BancoDados crud = new BancoDados(getBaseContext());
         if(desativaAnterior) {
-            crud.desativaRegistro(remedioAntigo.getId());
+            crud.desativaRemedio(remedioAntigo.getId());
         }
-        crud.addRemedio(remedio);
+        crud.inserirRemedio(remedio);
         Intent intent = new Intent(Inserir.this, MenuPrincipal.class);
         Toast.makeText(getBaseContext(), "Remédio inserido com sucesso.", Toast.LENGTH_LONG).show();
         startActivity(intent);

@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.1" />
 
-    <Button
+    <!--<Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/deletar"
@@ -51,7 +51,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.1" />-->
 
     <Button
         android:layout_width="fill_parent"

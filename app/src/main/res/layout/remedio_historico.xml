@@ -40,33 +40,46 @@
             android:layout_height="20px"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/editText2"
-            android:layout_marginEnd="237dp"
-            android:id="@+id/space" />
+            android:id="@+id/space"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentTop="false"
             android:layout_alignParentStart="true"
             android:text="Dia"
-            android:textSize="20sp" />/>
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_below="@+id/space" />/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:layout_alignBottom="@+id/editText"
             android:layout_alignParentEnd="true"
             android:text="Hora"
-            android:textSize="20sp" />/>
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_below="@+id/space" />
 
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_below="@+id/editText"
+            android:id="@+id/space2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lvHistorico"
-            android:layout_below="@+id/editText"
+            android:layout_below="@+id/space2"
             android:layout_alignParentStart="true" />
 
 

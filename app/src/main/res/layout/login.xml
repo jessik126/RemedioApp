@@ -74,6 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="#c04052b5"
-        android:text="@string/cadastrar"
+        android:text="Novo cadastro"
         android:textColor="#FFFFFF" />
 </LinearLayout>

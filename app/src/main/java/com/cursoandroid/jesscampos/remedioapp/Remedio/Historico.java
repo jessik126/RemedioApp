@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.CriaBancoDados;
+import com.cursoandroid.jesscampos.remedioapp.MenuPrincipal;
 import com.cursoandroid.jesscampos.remedioapp.MenuRemedio;
 import com.cursoandroid.jesscampos.remedioapp.R;
 
@@ -32,8 +33,8 @@ public class Historico extends AppCompatActivity {
         //banco
         BancoDados crud = new BancoDados(getBaseContext());
         codigo = this.getIntent().getStringExtra("codigo");
-        cursorRemedio = crud.carregaDadoById(Integer.parseInt(codigo));
-        cursor = crud.carregaDadosHistoricosByRemedio(Integer.parseInt(codigo));
+        cursorRemedio = crud.carregaRemedioPorId(Integer.parseInt(codigo));
+        cursor = crud.carregaHistoricosPorRemedio(Integer.parseInt(codigo));
         //cursor = crud.carregaDadosHistorico();
 
         TextView infoRemedio = (TextView)findViewById(R.id.tvInfoHistorico);
@@ -62,4 +63,10 @@ public class Historico extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,MenuPrincipal.class);
+        startActivity(intent);
+    }
 }

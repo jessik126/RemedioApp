@@ -14,16 +14,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/lista"
-        android:id="@+id/tvListar"/>
-
-
+        android:id="@+id/tvListar"
+        android:layout_gravity="center_horizontal" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="322dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
@@ -32,20 +30,24 @@
 
         <Space
             android:layout_width="20px"
-            android:layout_height="20px"
+            android:layout_height="30px"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/editText2"
-            android:layout_marginEnd="237dp"
-            android:id="@+id/space" />
+            android:id="@+id/space"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentTop="false"
             android:layout_alignParentStart="true"
             android:text="Caixa"
-            android:textSize="20sp" />/>
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            android:layout_below="@+id/space" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,13 +56,24 @@
             android:layout_alignBottom="@+id/editText"
             android:layout_alignParentEnd="true"
             android:text="Nome"
-            android:textSize="20sp" />/>
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"
+            android:layout_below="@+id/space" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_below="@+id/editText"
+            android:id="@+id/space2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lvRemedios"
-            android:layout_below="@+id/editText"
+            android:layout_below="@+id/space2"
             android:layout_alignParentStart="true" />
 
 

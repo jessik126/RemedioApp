@@ -22,7 +22,7 @@ public class BancoDados {
 
     //TABLE_REMEDIOS
 
-    public String addRemedio(Remedio remedio) {
+    public String inserirRemedio(Remedio remedio) {
         db = banco.getWritableDatabase();
         long resultado;
 
@@ -46,7 +46,7 @@ public class BancoDados {
 
     }
 
-    public Cursor carregaDados(){
+    public Cursor carregaRemedios(){
         Cursor cursor;
         String[] campos =  {banco.KEY_ID, banco.KEY_CAIXA,banco.KEY_NOME};
         db = banco.getReadableDatabase();
@@ -59,7 +59,7 @@ public class BancoDados {
         return cursor;
     }
 
-    public Cursor carregaDadoById(int id){
+    public Cursor carregaRemedioPorId(int id){
         Cursor cursor;
         String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
         String where = CriaBancoDados.KEY_ID + "=" + id;
@@ -73,7 +73,7 @@ public class BancoDados {
         return cursor;
     }
 
-    public Remedio carregaDadosPorCaixa(String caixa){
+    public Remedio carregaRemedioPorCaixa(String caixa){
         Cursor cursor;
         Remedio remedio = null;
         String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
@@ -107,7 +107,7 @@ public class BancoDados {
         return remedio;
     }
 
-    public void alteraRegistro(int id, Remedio remedio){
+    public void alteraRemedio(int id, Remedio remedio){
         ContentValues valores = new ContentValues();
         valores.put(CriaBancoDados.KEY_NOME, remedio.nome);
         valores.put(CriaBancoDados.KEY_CAIXA, remedio.caixa);
@@ -123,14 +123,14 @@ public class BancoDados {
         db.close();
     }
 
-    public void deletaRegistro(int id){
+    public void deletaRemedio(int id){
         String where = CriaBancoDados.KEY_ID + "=" + id;
         db = banco.getReadableDatabase();
         db.delete(CriaBancoDados.TABLE_REMEDIOS,where,null);
         db.close();
     }
 
-    public void desativaRegistro(int id){
+    public void desativaRemedio(int id){
         ContentValues valores = new ContentValues();
         valores.putNull(CriaBancoDados.KEY_CAIXA);
         
@@ -140,7 +140,7 @@ public class BancoDados {
         db.close();
     }
 
-    public List<Remedio> obterRemediosAtivos(){
+        public List<Remedio> listarRemedios(){
         Cursor cursor;
         String[] campos = {banco.KEY_ID, banco.KEY_NOME, banco.KEY_CAIXA, banco.KEY_HORA, banco.KEY_FREQHORA, banco.KEY_MEDICO, banco.KEY_FREQDIA};
         String where = CriaBancoDados.KEY_CAIXA + " IS NOT NULL";
@@ -151,10 +151,10 @@ public class BancoDados {
             cursor.moveToFirst();
         }
         db.close();
-        return obterRemedioPorCursor(cursor);
+        return listarRemedioPorCursor(cursor);
     }
 
-    private List<Remedio> obterRemedioPorCursor(Cursor cursor) {
+    private List<Remedio> listarRemedioPorCursor(Cursor cursor) {
         List<Remedio> remedios = new ArrayList<Remedio>();
         if(cursor == null)
             return remedios;
@@ -205,7 +205,7 @@ public class BancoDados {
             return "Registro Inserido com sucesso";
     }
 
-    public Cursor carregaDadosHistorico(){
+    public Cursor carregaHistoricos(){
         Cursor cursor;
         String[] campos = {banco.KEY_ID_HISTORICO, banco.KEY_ID_REMEDIO, banco.KEY_DIA_HISTORICO, banco.KEY_HORA_HISTORICO};
         db = banco.getReadableDatabase();
@@ -218,7 +218,7 @@ public class BancoDados {
         return cursor;
     }
 
-    public Cursor carregaDadosHistoricosByRemedio(int idRemedio){
+    public Cursor carregaHistoricosPorRemedio(int idRemedio){
         Cursor cursor;
         String[] campos = {banco.KEY_ID_HISTORICO, banco.KEY_ID_REMEDIO, banco.KEY_DIA_HISTORICO, banco.KEY_HORA_HISTORICO};
         String where = CriaBancoDados.KEY_ID_REMEDIO + "=" + idRemedio;
