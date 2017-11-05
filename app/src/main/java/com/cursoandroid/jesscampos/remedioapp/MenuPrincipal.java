@@ -1,13 +1,17 @@
 package com.cursoandroid.jesscampos.remedioapp;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cursoandroid.jesscampos.remedioapp.BancoDados.BancoDados;
@@ -28,8 +32,9 @@ import java.util.UUID;
 public class MenuPrincipal extends AppCompatActivity {
     String address;
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-
+    GerenciadorBluetooth gerenciador;
+    private ProgressDialog dialog;
+    private ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,20 +87,39 @@ public class MenuPrincipal extends AppCompatActivity {
             } else {
                 btSincronizar.setEnabled(false);
                 btSincronizar.setBackgroundColor(0x334052b5);
+                btDesconectar.setEnabled(false);
+                btDesconectar.setBackgroundColor(0x334052b5);
             }
         }
         catch (Exception e){
             btSincronizar.setEnabled(false);
             btSincronizar.setBackgroundColor(0x334052b5);
+            btDesconectar.setEnabled(false);
+            btDesconectar.setBackgroundColor(0x334052b5);
         }
 
         address = this.getIntent().getStringExtra("enderecoDispositivo");
+        loading = (ProgressBar) findViewById(R.id.loading);
+        loading.setVisibility(View.INVISIBLE);
+
 
         //evento sincronizar bluetooth
         btSincronizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                criaSocket();
+                Toast.makeText(getBaseContext(), "Sincronizando... aguarde. ", Toast.LENGTH_SHORT).show();
+                //loading.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        criaSocket();
+
+                    }
+                }, 1000);
+
+
+                //criaSocket();
             }
         });
 
@@ -103,6 +127,7 @@ public class MenuPrincipal extends AppCompatActivity {
         btDesconectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gerenciador.onTerminate();
                 btSincronizar.setEnabled(false);
                 btSincronizar.setBackgroundColor(0x334052b5);
                 btDesconectar.setEnabled(false);
@@ -112,19 +137,26 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     void criaSocket(){
-        GerenciadorBluetooth gerenciador = (GerenciadorBluetooth) getApplication();
+        boolean sincronizado = false;
+        gerenciador = (GerenciadorBluetooth) getApplication();
         Button btSincronizar = (Button) findViewById(R.id.btSincronizar);
         Button btDesconectar = (Button) findViewById(R.id.btDesconectar);
 
         Context context = MenuPrincipal.this;
-        if(gerenciador.sincronizaAlarme(context)) {
-            Toast.makeText(getBaseContext(), "Dados enviados com sucesso", Toast.LENGTH_LONG).show();
+
+        sincronizado = gerenciador.sincronizaAlarme(context);
+
+        if(sincronizado) {
+            Toast.makeText(getBaseContext(), "Dados enviados e recebidos com sucesso", Toast.LENGTH_LONG).show();
             btDesconectar.setEnabled(true);
             btDesconectar.setBackgroundColor(0xFF4052b5);
         } else {
+            gerenciador.onTerminate();
             btSincronizar.setEnabled(false);
             btSincronizar.setBackgroundColor(0x334052b5);
             Toast.makeText(getBaseContext(), "Falha ao enviar ou receber dados", Toast.LENGTH_LONG).show();
         }
     }
+
+
 }

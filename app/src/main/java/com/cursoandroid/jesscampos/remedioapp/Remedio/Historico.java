@@ -24,6 +24,7 @@ public class Historico extends AppCompatActivity {
     Cursor cursor;
     Cursor cursorRemedio;
     String codigo;
+    String nomeRemedio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +34,17 @@ public class Historico extends AppCompatActivity {
         //banco
         BancoDados crud = new BancoDados(getBaseContext());
         codigo = this.getIntent().getStringExtra("codigo");
+        nomeRemedio = this.getIntent().getStringExtra("nomeRemedio");
         cursorRemedio = crud.carregaRemedioPorId(Integer.parseInt(codigo));
         cursor = crud.carregaHistoricosPorRemedio(Integer.parseInt(codigo));
         //cursor = crud.carregaDadosHistorico();
 
+        TextView nomeTela = (TextView)findViewById(R.id.tvHistorico);
+        nomeTela.setText(nomeTela.getText() + " " + nomeRemedio);
+
         TextView infoRemedio = (TextView)findViewById(R.id.tvInfoHistorico);
-        infoRemedio.setText("A partir do horário " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)) +
-        " a cada " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)) + " horas");
+        infoRemedio.setText("Ingerir às " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_HORA)) +
+        " a cada " + cursorRemedio.getString(cursorRemedio.getColumnIndexOrThrow(CriaBancoDados.KEY_FREQHORA)) + " hora(s)");
 
 
         String[] nomeCampos = new String[] {CriaBancoDados.KEY_DIA_HISTORICO, CriaBancoDados.KEY_HORA_HISTORICO};
@@ -52,13 +57,7 @@ public class Historico extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String codigo;
-                cursor.moveToPosition(position);
-                codigo = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_ID));
-                Intent abreTela = new Intent(Historico.this, MenuRemedio.class);
-                abreTela.putExtra("codigo", codigo);
 
-                Historico.this.startActivity(abreTela);
             }
         });
     }

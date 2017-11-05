@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class GerenciadorBluetooth extends Application {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice device;
     private BluetoothSocket btSocket;
-    private static final String TAG = "Menu Principal";
+    private static final String TAG = "Conexão Bluetooth";
     private Context context;
 
     @Override
@@ -48,6 +49,7 @@ public class GerenciadorBluetooth extends Application {
         } catch (IOException e) {
         }
     }
+
 
     public boolean abrirSocket(String address) {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -72,14 +74,22 @@ public class GerenciadorBluetooth extends Application {
         return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
     }
 
+
     public boolean sincronizaAlarme(Context context) {
         this.context = context;
+        long timeInMills = 3000;
+
         try{
             OutputStream mmOutStream = btSocket.getOutputStream();
-            InputStream mmInStream = btSocket.getInputStream();
             enviaAlarme(mmOutStream);
+            Log.e(TAG, "Sleep on");
+            SystemClock.sleep(timeInMills);
+            Log.e(TAG, "Sleep off" );
             enviaSinalHistorico(mmOutStream);
+
+            InputStream mmInStream = btSocket.getInputStream();
             recebeHistorico(mmInStream);
+
             return true;
         }
         catch (IOException e) {
@@ -106,7 +116,8 @@ public class GerenciadorBluetooth extends Application {
                 caixas[i] = enviaAlarmePorCaixa(remedio, mmOutStream);
             }
         }
-        Toast.makeText(context, "Envio terminado", Toast.LENGTH_LONG).show();
+        Log.e(TAG, "Envio terminado");
+        //Toast.makeText(context, "Envio terminado", Toast.LENGTH_LONG).show();
     }
 
     private boolean enviaAlarmePorCaixa(Remedio remedio, OutputStream mmOutStream){
@@ -123,7 +134,7 @@ public class GerenciadorBluetooth extends Application {
         try {
             mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
             Log.e(TAG, "Envio completo - caixa " + remedio.getCaixa());
-            Toast.makeText(context, "Envio completo - caixa " + remedio.getCaixa(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Envio completo - caixa " + remedio.getCaixa(), Toast.LENGTH_LONG).show();
             return true;
         } catch (IOException e) {
             //if you cannot write, close the application
@@ -152,9 +163,9 @@ public class GerenciadorBluetooth extends Application {
         int bytes;
         String jsonRecebido = "";
         String readMessage = "";
-
+        Log.e(TAG, "Inicia processamento historico ");
         // Keep looping to listen for received messages
-        while (!readMessage.equals("!")) {
+        while (true) {
             try {
                 bytes = mmInStream.read(buffer);           //read bytes from input buffer
                 readMessage = new String(buffer, 0, bytes);
@@ -163,8 +174,14 @@ public class GerenciadorBluetooth extends Application {
                 if(readMessage.equals("}")) {
                     processaHistorico(jsonRecebido);
                     jsonRecebido = "";
+                    Log.e(TAG, "Processado");
+                }
+                else if(readMessage.equals("!")){
+                    Log.e(TAG, "Finalizado Historico tag: " + jsonRecebido);
+                    break;
                 }
             } catch (IOException e) {
+                Log.e(TAG, "Read error: " + e.getMessage());
                 break;
             }
         }
@@ -174,7 +191,8 @@ public class GerenciadorBluetooth extends Application {
     private void enviaSinalHistorico(OutputStream mmOutStream){
         try {
             mmOutStream.write("historico".getBytes());
-            Toast.makeText(getBaseContext(), "Inicio recebimento Historico", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Envia sinal historico");
+            //.makeText(getBaseContext(), "Inicio recebimento Historico", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
         }
     }
@@ -187,6 +205,7 @@ public class GerenciadorBluetooth extends Application {
                 if(json.length() == 1)
                     continue;
                 try {
+                    Log.e(TAG, "Json parsing: " + json);
                     JSONObject jsonObj = new JSONObject(json);
                     RemedioHistorico historico = new RemedioHistorico(jsonObj.getInt("id"), jsonObj.getString("hr"), jsonObj.getString("dt"));
 

@@ -59,7 +59,8 @@
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             android:textStyle="italic"
-            android:layout_below="@+id/space" />
+            android:layout_below="@+id/space"
+            android:paddingRight="20dp" />
 
         <Space
             android:layout_width="20px"

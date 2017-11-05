@@ -19,6 +19,12 @@
         android:text="@string/historico"
         android:id="@+id/tvHistorico"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.1"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +60,8 @@
             android:textColor="@color/colorPrimary"
             android:textStyle="italic"
             android:textSize="20sp"
-            android:layout_below="@+id/space" />/>
+            android:layout_below="@+id/space"
+            android:paddingLeft="20dp" />/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,7 +72,8 @@
             android:textColor="@color/colorPrimary"
             android:textStyle="italic"
             android:textSize="20sp"
-            android:layout_below="@+id/space" />
+            android:layout_below="@+id/space"
+            android:paddingRight="20dp" />
 
         <Space
             android:layout_width="20px"

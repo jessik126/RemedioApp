@@ -35,7 +35,8 @@ public class MenuRemedio extends AppCompatActivity {
         BancoDados crud = new BancoDados(getBaseContext());
         Cursor cursor = crud.carregaRemedioPorId(Integer.parseInt(codigo));
         TextView nomeTela = (TextView)findViewById(R.id.tvMenuRemedio);
-        nomeTela.setText(nomeTela.getText() + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME)));
+        final String nomeRemedio = cursor.getString(cursor.getColumnIndexOrThrow(CriaBancoDados.KEY_NOME));
+        nomeTela.setText(nomeTela.getText() + "\n" + nomeRemedio);
         nomeTela.setGravity(Gravity.CENTER_HORIZONTAL);
 
         //evento remedio_editar
@@ -82,6 +83,7 @@ public class MenuRemedio extends AppCompatActivity {
                 //abrir tela bluetooth_sincronizar
                 Intent abreTela = new Intent(MenuRemedio.this, Historico.class);
                 abreTela.putExtra("codigo", codigo);
+                abreTela.putExtra("nomeRemedio", nomeRemedio);
                 MenuRemedio.this.startActivity(abreTela);
             }
         });

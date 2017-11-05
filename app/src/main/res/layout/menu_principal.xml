@@ -10,7 +10,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/layoutMenuPrincipal">
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,7 +76,9 @@
         android:textColor="#FFFFFF"
         android:background="#334052b5"
         android:layout_gravity="center_horizontal"
-        android:enabled="false" />
+        android:enabled="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <Space
         android:layout_width="match_parent"
@@ -91,6 +94,17 @@
         android:background="#334052b5"
         android:layout_gravity="center_horizontal"
         android:enabled="false" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:layout_gravity="center" />
+
 </LinearLayout>
 
 

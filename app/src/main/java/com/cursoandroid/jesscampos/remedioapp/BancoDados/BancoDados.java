@@ -221,9 +221,9 @@ public class BancoDados {
     public Cursor carregaHistoricosPorRemedio(int idRemedio){
         Cursor cursor;
         String[] campos = {banco.KEY_ID_HISTORICO, banco.KEY_ID_REMEDIO, banco.KEY_DIA_HISTORICO, banco.KEY_HORA_HISTORICO};
-        String where = CriaBancoDados.KEY_ID_REMEDIO + "=" + idRemedio;
+        String where = banco.KEY_ID_REMEDIO + "=" + idRemedio + " ORDER BY " + banco.KEY_DIA_HISTORICO + " , " + banco.KEY_HORA_HISTORICO ;
         db = banco.getReadableDatabase();
-        cursor = db.query(CriaBancoDados.TABLE_REMEDIOS_HISTORICO,campos,where, null, null, null, null, null);
+        cursor = db.query(banco.TABLE_REMEDIOS_HISTORICO,campos,where, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
